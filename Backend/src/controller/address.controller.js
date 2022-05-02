@@ -40,7 +40,7 @@ export default class AddressController {
     }
 
     /**
-     * GET /address:
+     * GET /cars:
      * Liste von Adressen liefern
      */
     async search(req, res, next) {
