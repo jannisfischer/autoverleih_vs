@@ -2,13 +2,12 @@
   "__TODO__": [
       "Feld 'name' anpassen mit dem richtigen Namen des Services",
       "Feld 'descriptn' anpassen mit einer Minibeschreibung des Services",
-      "Feld 'author' anpassen mit den richtigen Autoren des Services",
       "Den Abschnitt __TODO__ hier wieder löschen. :-)"
   ],
   "name": "myapp-backend",
   "version": "1.0.0",
   "description": "Meine App: Backend",
-  "author": "Erika Musterfrau",
+  "author": "Jannis Fischer, Kevin Gosmann, Tobias Reiser, Luca Schneider",
   "license": "CC-BY-4.0",
   "main": "src/index.js",
   "type": "module",
