@@ -29,9 +29,9 @@ html {
 
 @media (min-width: 40em) {
     html {
-        /* http://bg.siteorigin.com/ */
+        /* https://autovermietung-fuder.de/wp-content/uploads/2018/01/HintergrundSlider2.jpeg */
         background-color: #669ac4;
-        background-image: url(img/background.png);
+        background-image: url(hintergrundauto.jpg);
 
         font-size: 11pt;
     }
