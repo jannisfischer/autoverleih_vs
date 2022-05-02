@@ -31,23 +31,30 @@ class DatabaseFactory {
      * wenigstens gleich ein paar Daten.
      */
     async _createDemoData() {
-        //// TODO: Methode anpassen, um zur eigenen App passende Demodaten anzulegen ////
-        //// oder die Methode ggf. einfach löschen und ihren Aufruf oben entfernen.  ////
-        let address = this.database.collection("addresses");
+        let cars = this.database.collection("cars");
 
-        if (await address.estimatedDocumentCount() === 0) {
-            address.insertMany([
+        if (await cars.estimatedDocumentCount() === 0) {
+            cars.insertMany([
                 {
-                    first_name: "Max",
-                    last_name: "Mustermann",
-                    phone: "1123456",
-                    email: "test@beispiel.de",
+                    brand: "Volkswagen",
+                    model: "Touran",
+                    type: "Van",
+                    production_date: "01.07.2021",
+                    status: "available",
                 },
                 {
-                    first_name: "Erika",
-                    last_name: "Musterfrau",
-                    phone: "1123456",
-                    email: "test@beispiel.de",
+                    brand: "Audi",
+                    model: "Q5",
+                    type: "SUV",
+                    production_date: "01.05.2020",
+                    status: "available",
+                },
+                {
+                    brand: "Seat",
+                    model: "Alhambra",
+                    type: "Van",
+                    production_date: "01.04.2019",
+                    status: "rented",
                 },
             ]);
         }
