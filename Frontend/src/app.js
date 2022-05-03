@@ -3,6 +3,7 @@
 import Backend from "./backend.js";
 import Router from "./router.js";
 import "./app.css";
+import Autoliste from "./autoliste.js";
 
 /**
  * Hauptklasse App: Steuert die gesamte Anwendung
@@ -26,6 +27,14 @@ class App {
             {
                 url: "^/$",
                 show: () => this._gotoList()
+            },
+            {
+                url: "/autoliste",
+                show: () => Autoliste
+            },
+            {
+                url: "/auto_erstellen",
+                show: () => Autoliste
             },
             //// TODO: Eigene Routing-Regeln hier in der Mitte einfügen ////
             {
