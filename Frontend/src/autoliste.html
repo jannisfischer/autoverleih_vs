@@ -4,31 +4,45 @@
     .container-main {
         background: #fff;
         display: flex;
+        flex-direction: column;
         padding: 15px;
     }
     #car-list{
         display: flex;
         flex-direction:column;
+        list-style: none;
     }
     .car-container {
         padding: 15px;
+        display: flex;
+        flex-direction: row;
         margin-bottom: 5px;
-        border-bottom: 1px #ccc;
+        border-bottom: 1px solid #ccc;
+        justify-content: space-between;
     }
+    .car-infos {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .car-infos p{
+        margin: 5px 0;
+    }
+
+    .car-buttons {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+    }
+
 </style>
 
 <!-- Inhalt der Seite -->
 <main>
-    <div class="container-main">
+    <div class=" container container-main">
         <h2>Verfügbare Autos</h2>
         <ul id="car-list">
-            <li class="car-container">
-                <p>Marke: </p>
-                <p>Modell: </p>
-                <p>Typ: </p>
-                <p>Produktionsdatum:</p>
-                <p>Status:</p>
-            </li>
+
         </ul>
     </div>
     <!-- TODO: HTML-Gerüst definieren -->
