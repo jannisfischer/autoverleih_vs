@@ -33,6 +33,7 @@ export default class CarService {
             model:           car.model           || "",
             type:            car.type            || "Kein Autotyp",
             production_date: car.production_date || "Kein Herstelldatum",
+            status:          car.status          || "Kein Status",
         };
 
         let result = await this._cars.insertOne(newCar);
@@ -63,6 +64,7 @@ export default class CarService {
         if (car.model)              updateDoc.$set.model            = car.model;
         if (car.type)               updateDoc.$set.type             = car.type;
         if (car.production_date)    updateDoc.$set.production_date  = car.production_date;
+        if (car.status)             updateDoc.$set.status           = car.status;
 
         let result = await this._cars.updateOne({_id: new ObjectId(id)}, updateDoc);
         return await this._cars.findOne({_id: new ObjectId(id)});
