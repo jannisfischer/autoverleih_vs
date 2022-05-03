@@ -3,6 +3,8 @@
 import Backend from "./backend.js";
 import Router from "./router.js";
 import "./app.css";
+import Autoliste from "./autoliste.js";
+import Auto_Erstellen from "./auto_erstellen.js"
 
 /**
  * Hauptklasse App: Steuert die gesamte Anwendung
@@ -26,6 +28,14 @@ class App {
             {
                 url: "^/$",
                 show: () => this._gotoList()
+            },
+            {
+                url: "/autoliste",
+                show: () => this._gotoCars()
+            },
+            {
+                url: "/auto_erstellen",
+                show: () => this._gotoCreateCar()
             },
             //// TODO: Eigene Routing-Regeln hier in der Mitte einfügen ////
             {
@@ -69,6 +79,30 @@ class App {
             let page = new PageList(this);
             await page.init();
             this._showPage(page, "list");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+    async _gotoCars() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: Autoliste} = await import("./autoliste.js");
+
+            let page = new Autoliste(this);
+            await page.init();
+            this._showPage(page, "autoliste");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+    async _gotoCreateCar() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: Auto_Erstellen} = await import("./auto_erstellen.js");
+
+            let page = new Auto_Erstellen(this);
+            await page.init();
+            this._showPage(page, "auto_erstellen");
         } catch (ex) {
             this.showException(ex);
         }
