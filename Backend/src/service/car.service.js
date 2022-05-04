@@ -1,4 +1,4 @@
-import DatabaseFactory "../database.js";
+import DatabaseFactory from "../database.js";
 
 /**
  * Fachliche Behandlung von allem, was mit Autos zu tun hat.

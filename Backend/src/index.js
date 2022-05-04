@@ -8,6 +8,7 @@ import OpenApiEnforcerMiddleware from "@dschulmeis/restify-openapi-enforcer-midd
 import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
 import AdressController from "./controller/address.controller.js";
+import CarController from "./controller/car.controller.js";
 
 // Verzeichnisnamen der Quellcodedatei ermitteln
 import path from "path";
@@ -92,7 +93,25 @@ server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 //// TODO: Weitere Controller-Klassen hinzufügen ////
 new RootController(server, "/", openApiFile);
 new AdressController(server, "/address");
+new CarController(server, "/car");
 
+// server.get("/", function(req, res, next) {
+//     res.send(200, "Hallo, Welt!");
+//     next();
+// });
+//
+// server.get("/address", function(req, res, next) {
+//     res.send([
+//         {
+//             first_name: "Dennis",
+//             last_name: "Schulmeister",
+//             phone: "123456789",
+//             email: "dhbw@windows3.de",
+//         }
+//     ]);
+//
+//     next();
+// });
 // server.get("/", function(req, res, next) {
 //     res.send(200, "Hallo, Welt!");
 //     next();

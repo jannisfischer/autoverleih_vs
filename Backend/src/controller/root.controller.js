@@ -32,9 +32,9 @@ import { readFile } from "fs/promises";
         //// TODO: Example-Collection hier durch eigene Collections ersetzen ////
         res.sendResult([
             {
-                _name: "address",
-                query: {url: "/address", method: "GET", queryParams: ["first_name", "last_name", "phone", "email"]},
-                create: {url: "/address", method: "POST"},
+                _name: "car",
+                query: {url: "/car", method: "GET", queryParams: ["brand", "model", "type", "production_date", "status"]},
+                create: {url: "/car", method: "POST"},
             },
             // {
             //     _name: "reciept",
