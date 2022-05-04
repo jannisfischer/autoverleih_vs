@@ -93,6 +93,7 @@ server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 // HTTP-Controller registrieren
 new RootController(server, "/", openApiFile);
 new AdressController(server, "/address");
+new CarController(server, "/car");
 
 // Server tatsächlich starten
 server.listen(config.port, config.host, function() {
