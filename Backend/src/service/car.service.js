@@ -1,34 +1,56 @@
+"use strict"
+
 import DatabaseFactory from "../database.js";
+import {ObjectId} from "mongodb";
 
 /**
- * Fachliche Behandlung von allem, was mit Autos zu tun hat.
+ * Geschäftslogik zur Verwaltung von Adressen. Diese Klasse implementiert die
+ * eigentliche Anwendungslogik losgelöst vom technischen Übertragungsweg.
+ * Die Adressen werden der Einfachheit halber in einer MongoDB abgelegt.
  */
 export default class CarService {
+    /**
+     * Konstruktor.
+     */
     constructor() {
         this._cars = DatabaseFactory.database.collection("cars");
     }
 
     /**
-     * Autos suchen
+     * Adressen suchen. Unterstützt wird lediglich eine ganz einfache Suche,
+     * bei der einzelne Felder auf exakte Übereinstimmung geprüft werden.
+     * Zwar unterstützt MongoDB prinzipiell beliebig komplexe Suchanfragen.
+     * Um das Beispiel klein zu halten, wird dies hier aber nicht unterstützt.
+     *
+     * @param {Object} query Optionale Suchparameter
+     * @return {Promise} Liste der gefundenen Adressen
      */
     async search(query) {
-        let cursor = this._cars.find({});
+        let cursor = this._cars.find(query, {
+            sort: {
+                first_name: 1,
+                last_name: 1,
+            }
+        });
 
         return cursor.toArray();
     }
 
     /**
-     * Neues Auto speichern
+     * Speichern eines neuen Autos.
+     *
+     * @param {Object} car Zu speichernde Autodaten
+     * @return {Promise} Gespeicherte Autodaten
      */
     async create(car) {
-        car = car = {};
+        car = car || {};
 
         let newCar = {
             brand:           car.brand           || "",
             model:           car.model           || "",
-            type:            car.type            || "Kein Autotyp",
-            production_date: car.production_date || "Kein Herstelldatum",
-            status:          car.status          || "Kein Status",
+            type:            car.type            || "",
+            production_date: car.production_date || "",
+            status:          car.status          || "",
         };
 
         let result = await this._cars.insertOne(newCar);
@@ -36,24 +58,31 @@ export default class CarService {
     }
 
     /**
-     * Einzelnes Auto anhand ihrer ID lesen
+     * Auslesen eines vorhandenen Autos anhand der ID.
+     *
+     * @param {String} id ID des gesuchten Autos
+     * @return {Promise} Gefundene Autodaten
      */
     async read(id) {
-        return await this._cars.findOne({_id: new ObjectId(id)});
+        let result = await this._cars.findOne({_id: new ObjectId(id)});
+        return result;
     }
 
     /**
-     * Einzelnes Auto aktualisieren / überschreiben
+     * Aktualisierung eines Autos, durch Überschreiben einzelner Felder
+     * oder des gesamten Autoobjekts (ohne die ID).
+     *
+     * @param {String} id ID des gesuchten Autos
+     * @param {[type]} car Zu speichernde Autodaten
+     * @return {Promise} Gespeicherte Autodaten oder undefined
      */
     async update(id, car) {
         let oldCar = await this._cars.findOne({_id: new ObjectId(id)});
         if (!oldCar) return;
 
         let updateDoc = {
-            $set: {
-                // Felder, die geändert werden sollen
-            },
-        };
+            $set: {},
+        }
 
         if (car.brand)              updateDoc.$set.brand            = car.brand;
         if (car.model)              updateDoc.$set.model            = car.model;
@@ -61,15 +90,18 @@ export default class CarService {
         if (car.production_date)    updateDoc.$set.production_date  = car.production_date;
         if (car.status)             updateDoc.$set.status           = car.status;
 
-        let result = await this._cars.updateOne({_id: new ObjectId(id)}, updateDoc);
-        return await this._cars.findOne({_id: new ObjectId(id)});
+        await this._cars.updateOne({_id: new ObjectId(id)}, updateDoc);
+        return this._cars.findOne({_id: new ObjectId(id)});
     }
 
     /**
-     * Einzelnes Auto löschen
+     * Löschen eines Autos anhand ihrer ID.
+     *
+     * @param {String} id ID des gesuchten Autos
+     * @return {Promise} Anzahl der gelöschten Datensätze
      */
     async delete(id) {
         let result = await this._cars.deleteOne({_id: new ObjectId(id)});
         return result.deletedCount;
     }
-};
+}
