@@ -1,29 +1,33 @@
 openapi: 3.0.0
 info:
   title: Autobuch
-  version: '1.0'
-  description: 'Die Autobuch-Anwendung besteht aus einer Single Page App im Frontend und einem REST-Webservice im Backend. Diese API-Spezifikation beschreibt den Backend-Webservice, der im Grunde genommen nichts anderes macht, als Autos in einer Datenbank zu verwalten.'
+  description: "Die Autobuch-App nutzt einen simplen REST-Webservices zur Kommunikation\
+    \ mit dem Backend. Dieser ermöglicht die üblichen CRUD-Operationen zur Suche,\
+    \ Anzeige, Bearbeitung und Löschung von Autos, wobei jedes Auto aus einer\
+    \ Marke, Model, Autotyp, Herstelldatum und einem Status besteht."
   contact:
     name: Dennis Schulmeister-Zimolong
-    url: 'https://www.wpvs.de'
+    url: https://www.wpvs.de
     email: dhbw@windows3.de
   license:
     name: CC-BY-4.0
+    url: https://creativecommons.org/licenses/by/4.0/deed.de
+  version: "1.0"
 servers:
-  - url: 'http://localhost:3000'
-    description: Lokale Entwicklung
-  - url: 'https://api.my-carbook.com'
-    description: Produktion
-  - url: 'https://test-api.my-carbook.com'
-    description: Demozugang
+- url: http://localhost:3000
+tags:
+- name: Index
+- name: Auto
 paths:
   /:
     get:
-      summary: Wurzeladresse des Webservices
       tags:
-        - Start
+      - Index
+      summary: Wurzeladresse des Webservices
+      description: Liefert eine HATEOAS-Übersicht aller collections
+      operationId: index
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -31,25 +35,59 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/HATEOAS_Collection'
-      operationId: get
-      description: HATEOAS-Verlinkgen auf die einzelnen Collections (Listen mit Daten) des Webservices liefern
-  ########## ABRUF DER OPENAPI.YAML ###################
-  /openapi.yaml:
-    get:
-      summary: OpenAPI-Spezifikation des Webservices
-      tags:
-        - Start
-      responses:
-        '200':
-          description: OK
-  ###################################################
+                x-content-type: application/json
+
   /car:
     get:
-      summary: Autoliste durchsuchen
       tags:
-        - Autoliste
+      - Auto
+      summary: Autos suchen
+      description: Suche nach Autos. Gibt eine Liste aller Autos passend zu
+        den übergebenen Suchkriterien zurück.
+      operationId: search-car
+      parameters:
+      - name: brand
+        in: query
+        description: Gesuchte Marke
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: model
+        in: query
+        description: Gesuchtes Model
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Gesuchter Autotyp
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: production_date
+        in: query
+        description: Gesuchtes Herstelldatum
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Gesuchter Status
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -57,138 +95,178 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Car'
-      operationId: get-car
-      description: Autos suchen. Für die Suche können über die URL verschiedene Suchparameter wie die Marke oder das Model mitgegeben werden. Als Antwort wird immer eine Liste mit den gefundenen Autos geliefert.
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: brand
-          description: Gesuchte Marke
-        - schema:
-            type: string
-          in: query
-          name: model
-          description: Gesuchtes Model
-        - schema:
-            type: string
-          in: query
-          name: type
-          description: Gesuchter Autotyp
-        - schema:
-            type: string
-          in: query
-          name: production_date
-          description: Gesuchtes Herstelldatum
-        - schema:
-            type: string
-          in: query
-          name: status
-          description: Gesuchter Status
+                x-content-type: application/json
     post:
-      summary: Neues Auto anlegen
       tags:
-        - Autoliste
+      - Auto
+      summary: Auto anlegen
+      description: "Neues Auto anlegen. Speichert das übergebene Auto in der\
+        \ Datenbank. Der Wert des Feldes \"_id\" wird dabei ignoriert, da in jedem Fall\
+        \ ein neues Auto mit neuer ID angelegt wird."
+      operationId: create-car
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Car'
       responses:
-        '201':
+        "201":
           description: Created
-          #### WARNING ######
           headers:
-            location:
+            Location:
               schema:
                 type: string
-          ###################
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Car'
-      operationId: post-car
-      description: 'Ein neues Auto anlegen. Hierzu muss ein vollständiges Autoobjekt mit mindestens der Marke und dem Model an den Server geschickt werden. Die ID wird beim Speichern von der Datenbank vergeben und kann deshalb vom Client nicht selbst gewählt werden. Ist sie in der Anfrage enthalten, wird sie vom Server ignoriert.'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Car'
-  '/car/{id}':
-    parameters:
-      - schema:
-          type: string
-        name: id
+
+  /car/{id}:
+    get:
+      tags:
+      - Auto
+      summary: Auto lesen
+      description: Liest ein einzelnes Auto vom Server.
+      operationId: get-car
+      parameters:
+      - name: id
         in: path
         required: true
-    get:
-      summary: Auto lesen
-      tags:
-        - Auto
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Car'
-        '404':
+        "404":
           description: Not Found
-      operationId: get-car-id
-      description: Details zu einem einzelnen Auto ermitteln.
     put:
-      summary: Auto überschreiben
       tags:
-        - Auto
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Car'
-        '404':
-          description: Not Found
-      operationId: put-car-id
-      description: 'Daten eines Autobucheintrags überschrieben. Bei einer PUT-Anfrage muss hierfür der vollständige Datensatz an den Server geschickt werden, inklusive der Felder, die nicht geändert werden sollen. Die ID kann als einziges Feld nicht geändert werden. Sie wird aus der URL übernommen und im Request Body vom Server ignoriert.'
+      - Auto überschreiben
+      summary: ""
+      description: "Überschreibt ein vorhandenes Auto auf dem Server. Bis auf die\
+        \ ID können alle Felder geändert werden. Der Versuch, die ID zu ändern, wird\
+        \ vom Server stillschweigend ignoriert."
+      operationId: update-car
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Car'
-        description: ''
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        "404":
+          description: Not Found
     patch:
-      summary: Einzelnes Feld ändern
       tags:
-        - Auto
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Car'
-        '404':
-          description: Not Found
-      operationId: patch-car-id
-      description: 'Einzelne Felder eines Autobucheintrags überschrieben. Bei einer PATCH-Anfrage müssen hierfür nur die Felder an den Server geschickt werden, die tatsächlich geändert werden sollen. Die ID kann als einziges Feld nicht geändert werden. Sie wird aus der URL übernommen und im Request Body vom Server ignoriert.'
+      - Einzelne Felder ändern
+      summary: Einzelne Autofelder ändern
+      description: "Ändert einzelne Felder eines vorhandenen Autos. Zulässig sind\
+        \ alle Felder bis auf die ID, da diese nachträglich nicht mehr verändert werden\
+        \ darf."
+      operationId: patch-car
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Car'
-    delete:
-      summary: Auto löschen
-      tags:
-        - Auto
       responses:
-        '204':
-          description: No Content
-        '404':
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        "404":
           description: Not Found
-      operationId: delete-car-id
-      description: Autobucheintrag löschen
+    delete:
+      tags:
+      - Auto
+      summary: Auto löschen
+      description: Löscht ein Auto auf dem Server.
+      operationId: delete-car
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+
 components:
   schemas:
-    Car:
-      title: Car
+    HATEOAS_Collection:
+      title: HATEOAS-Links einer Collection
       type: object
-      description: 'Ein Eintrag im Autobuch, bestehend aus Marke, Model, Autotyp, Herstelldatum und Status. Die ID wird von der Datenbank generiert und kann nachträglich nicht mehr verändert werden.'
+      properties:
+        _name:
+          type: string
+        query:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        create:
+          $ref: '#/components/schemas/HATEOAS_Link'
+
+    HATEOAS_Resource:
+      title: HATEOAS-Links einer Resource
+      type: object
+      properties:
+        read:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        update:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        patch:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        delete:
+          $ref: '#/components/schemas/HATEOAS_Link'
+
+    HATEOAS_Link:
+      title: HATEOAS-Link
+      type: object
+      properties:
+        url:
+          type: string
+        method:
+          type: string
+        query_params:
+          type: array
+          items:
+            type: string
+
+    Car:
+      title: Auto
+      type: object
       properties:
         _links:
           $ref: '#/components/schemas/HATEOAS_Resource'
@@ -204,44 +282,14 @@ components:
           type: string
         status:
           type: string
-    HATEOAS_Collection:
-      title: HATEOAS_Collection
-      type: object
-      description: HATEOAS-Verlinkung zu einer einzelnen Collection (Liste von Daten) des Webservices.
-      properties:
-        _name:
-          type: string
-        query:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        create:
-          $ref: '#/components/schemas/HATEOAS_Link'
-    HATEOAS_Resource:
-      title: HATEOAS_Resource
-      type: object
-      description: 'HATEOAS-Verlinkungen zu einem einzelnen Datensatz / Autobucheintrag. Definiert, wie der Eintrag gelesen, aktualisiert, gepatcht oder gelöscht werden kann.'
-      properties:
-        read:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        update:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        patch:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        delete:
-          $ref: '#/components/schemas/HATEOAS_Link'
-    HATEOAS_Link:
-      title: HATEOAS_Link
-      type: object
-      description: 'Eine einzelner HATEOAS-Verlinkung innerhalb des Webservices. Definiert das Auto, URL und Query Parameter zum Aufruf der jeweiligen Aktion.'
-      properties:
-        url:
-          type: string
-        method:
-          type: string
-        query_params:
-          type: array
-          items:
-            type: string
-tags:
-  - name: Auto
-  - name: Autoliste
-  - name: Start
+      required:
+        - brand
+        - model
+      example:
+        _id: "621ff9a936997df5baba746e"
+        brand: "Volkswagen"
+        model: "Touran"
+        type: "Van"
+        production_date: "01.07.2021"
+        status: "available"
+  securitySchemes: {}
