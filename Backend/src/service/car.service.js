@@ -77,7 +77,7 @@ export default class CarService {
 
         let updateDoc = {
             $set: {},
-        }
+        };
 
         if (car.brand)              updateDoc.$set.brand            = car.brand;
         if (car.model)              updateDoc.$set.model            = car.model;
