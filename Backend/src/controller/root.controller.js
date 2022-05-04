@@ -42,7 +42,7 @@ export default class RootController {
     }
 
     /**
-     * GET /openapi.yaml:
+     * GET /openapicar.yaml:
      * Abruf der OpenAPI-Spezifikation
      */
     async openApi(req, res, next) {
@@ -50,7 +50,7 @@ export default class RootController {
             let filecontent = await readFile(this._openApiFile);
 
             res.status(200);
-            res.header("content-type", "application/openapi+yaml");
+            res.header("content-type", "application/openapicar+yaml");
             res.sendRaw(filecontent);
         } else {
             res.send();
