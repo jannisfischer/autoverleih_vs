@@ -20,7 +20,7 @@ class DatabaseFactory {
         // Datenbankverbindung herstellen
         this.client = new MongoClient(connectionUrl);
         await this.client.connect();
-        this.database = this.client.db("adressbook");
+        this.database = this.client.db("rental");
 
         await this._createDemoData();
     }
@@ -31,39 +31,30 @@ class DatabaseFactory {
      * wenigstens gleich ein paar Daten.
      */
     async _createDemoData() {
-        let addresses = this.database.collection("addresses");
+        let car = this.database.collection("cars");
 
-        if (await addresses.estimatedDocumentCount() === 0) {
-            addresses.insertMany([
+        if (await car.estimatedDocumentCount() === 0) {
+            car.insertMany([
                 {
-                    first_name: "Willy",
-                    last_name: "Tanner",
-                    phone: "+49 711 564412",
-                    email: "willy.tanner@alf.com",
+                    brand: "Volkswagen",
+                    model: "Touran",
+                    type: "Van",
+                    production_date: "01.07.2021",
+                    status: "available",
                 },
                 {
-                    first_name: "Michael",
-                    last_name: "Knight",
-                    phone: "+49 721 554194",
-                    email: "michael@knight-rider.com",
+                    brand: "Audi",
+                    model: "Q5",
+                    type: "SUV",
+                    production_date: "01.05.2020",
+                    status: "available",
                 },
                 {
-                    first_name: "Fox",
-                    last_name: "Mulder",
-                    phone: "+49 721 553181",
-                    email: "mulder@xfiles.com",
-                },
-                {
-                    first_name: "Dana",
-                    last_name: "Scully",
-                    phone: "+49 721 572287",
-                    email: "scully@xfiles.com",
-                },
-                {
-                    first_name: "Elwood",
-                    last_name: "Blues",
-                    phone: "+49 721 957338",
-                    email: "elwood@blues-brothers.com",
+                    brand: "Seat",
+                    model: "Alhambra",
+                    type: "Van",
+                    production_date: "01.04.2019",
+                    status: "rented",
                 },
             ]);
         }
