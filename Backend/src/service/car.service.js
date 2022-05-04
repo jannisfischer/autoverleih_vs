@@ -12,12 +12,7 @@ export default class CarService {
      * Autos suchen
      */
     async search(query) {
-        let cursor = this._cars.find(query, {
-            sort: {
-                brand: 1,
-                model: 1,
-            }
-        });
+        let cursor = this._cars.find({});
 
         return cursor.toArray();
     }
