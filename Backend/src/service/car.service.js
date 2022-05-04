@@ -26,12 +26,7 @@ export default class CarService {
      * @return {Promise} Liste der gefundenen Adressen
      */
     async search(query) {
-        let cursor = this._cars.find(query, {
-            sort: {
-                first_name: 1,
-                last_name: 1,
-            }
-        });
+        let cursor = this._cars.find({});
 
         return cursor.toArray();
     }
