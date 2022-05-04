@@ -1,15 +1,29 @@
-import DatabaseFactory "../database.js";
+"use strict"
+
+import DatabaseFactory from "../database.js";
+import {ObjectId} from "mongodb";
 
 /**
- * Fachliche Behandlung von allem, was mit Adressen zu tun hat.
+ * Geschäftslogik zur Verwaltung von Adressen. Diese Klasse implementiert die
+ * eigentliche Anwendungslogik losgelöst vom technischen Übertragungsweg.
+ * Die Adressen werden der Einfachheit halber in einer MongoDB abgelegt.
  */
 export default class AddressService {
+    /**
+     * Konstruktor.
+     */
     constructor() {
         this._addresses = DatabaseFactory.database.collection("addresses");
     }
 
     /**
-     * Adressen suchen
+     * Adressen suchen. Unterstützt wird lediglich eine ganz einfache Suche,
+     * bei der einzelne Felder auf exakte Übereinstimmung geprüft werden.
+     * Zwar unterstützt MongoDB prinzipiell beliebig komplexe Suchanfragen.
+     * Um das Beispiel klein zu halten, wird dies hier aber nicht unterstützt.
+     *
+     * @param {Object} query Optionale Suchparameter
+     * @return {Promise} Liste der gefundenen Adressen
      */
     async search(query) {
         let cursor = this._addresses.find(query, {
@@ -23,16 +37,19 @@ export default class AddressService {
     }
 
     /**
-     * Neue Adresse speichern
+     * Speichern einer neuen Adresse.
+     *
+     * @param {Object} address Zu speichernde Adressdaten
+     * @return {Promise} Gespeicherte Adressdaten
      */
     async create(address) {
-        address = address = {};
+        address = address || {};
 
         let newAddress = {
             first_name: address.first_name || "",
             last_name:  address.last_name  || "",
-            phone:      address.phone      || "Keine Telefonnummer",
-            email:      address.email      || "Keine E-Mail",
+            phone:      address.phone      || "",
+            email:      address.email      || "",
         };
 
         let result = await this._addresses.insertOne(newAddress);
@@ -40,39 +57,49 @@ export default class AddressService {
     }
 
     /**
-     * Einzelne Adresse anhand ihrer ID lesen
+     * Auslesen einer vorhandenen Adresse anhand ihrer ID.
+     *
+     * @param {String} id ID der gesuchten Adresse
+     * @return {Promise} Gefundene Adressdaten
      */
     async read(id) {
-        return await this._addresses.findOne({_id: new ObjectId(id)});
+        let result = await this._addresses.findOne({_id: new ObjectId(id)});
+        return result;
     }
 
     /**
-     * Einzelne Adresse aktualisieren / überschreiben
+     * Aktualisierung einer Adresse, durch Überschreiben einzelner Felder
+     * oder des gesamten Adressobjekts (ohne die ID).
+     *
+     * @param {String} id ID der gesuchten Adresse
+     * @param {[type]} address Zu speichernde Adressdaten
+     * @return {Promise} Gespeicherte Adressdaten oder undefined
      */
     async update(id, address) {
         let oldAddress = await this._addresses.findOne({_id: new ObjectId(id)});
         if (!oldAddress) return;
 
         let updateDoc = {
-            $set: {
-                // Felder, die geändert werden sollen
-            },
-        };
+            $set: {},
+        }
 
         if (address.first_name) updateDoc.$set.first_name = address.first_name;
         if (address.last_name)  updateDoc.$set.last_name  = address.last_name;
         if (address.phone)      updateDoc.$set.phone      = address.phone;
         if (address.email)      updateDoc.$set.email      = address.email;
 
-        let result = await this._addresses.updateOne({_id: new ObjectId(id)}, updateDoc);
-        return await this._addresses.findOne({_id: new ObjectId(id)});
+        await this._addresses.updateOne({_id: new ObjectId(id)}, updateDoc);
+        return this._addresses.findOne({_id: new ObjectId(id)});
     }
 
     /**
-     * Einzelne Adresse löschen
+     * Löschen einer Adresse anhand ihrer ID.
+     *
+     * @param {String} id ID der gesuchten Adresse
+     * @return {Promise} Anzahl der gelöschten Datensätze
      */
     async delete(id) {
         let result = await this._addresses.deleteOne({_id: new ObjectId(id)});
         return result.deletedCount;
     }
-};
+}

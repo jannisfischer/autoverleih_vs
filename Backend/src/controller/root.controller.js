@@ -6,15 +6,16 @@ import { readFile } from "fs/promises";
 
 /**
  * Controller für die Wurzeladresse des Webservices. Ermöglicht in dieser
- * Fassung den Abruf der OpenAPI-Spezifikation unter `/openapi.yaml`.
+ * Fassung den Abruf der OpenAPI-Spezifikation unter `/?openapi` sowie den
+ * Abruf einer HATEOAS-Übersucht unter `/`.
  */
- export default class RootController {
+export default class RootController {
     /**
      * Konstruktor. Hier werden die URL-Handler registrert.
      *
      * @param {Object} server Restify Serverinstanz
      * @param {String} prefix Gemeinsamer Prefix aller URLs
-     * @param {String} openApiFile Pfad der OpenAPI-Datei
+     * @param {String} openApiFile Pfad zur OpenAPI-Datei
      */
     constructor(server, prefix, openApiFile) {
         this._openApiFile = openApiFile;
@@ -29,18 +30,12 @@ import { readFile } from "fs/promises";
      * so dass Clients die URL-Struktur des Webservices entdecken können).
      */
     async index(req, res, next) {
-        //// TODO: Example-Collection hier durch eigene Collections ersetzen ////
         res.sendResult([
             {
-                _name: "car",
-                query: {url: "/car", method: "GET", queryParams: ["brand", "model", "type", "production_date", "status"]},
-                create: {url: "/car", method: "POST"},
-            },
-            // {
-            //     _name: "reciept",
-            //     query: {url: "/reciept", method: "GET", queryParams: ["name", "duration"]},
-            //     create: {url: "/reciept", method: "POST"},
-            // }
+                _name: "address",
+                query: {url: "/address", method: "GET", query_params: ["search", "first_name", "last_name", "phone", "email"]},
+                create: {url: "/address", method: "POST"},
+            }
         ]);
 
         next();
@@ -51,12 +46,16 @@ import { readFile } from "fs/promises";
      * Abruf der OpenAPI-Spezifikation
      */
     async openApi(req, res, next) {
-        let filecontent = await readFile(this._openApiFile);
+        if (req.query.openapi !== undefined) {
+            let filecontent = await readFile(this._openApiFile);
 
-        res.status(200);
-        res.header("content-type", "application/openapi+yaml");
-        res.sendRaw(filecontent);
+            res.status(200);
+            res.header("content-type", "application/openapi+yaml");
+            res.sendRaw(filecontent);
+        } else {
+            res.send();
+        }
 
         next();
     }
- }
+}

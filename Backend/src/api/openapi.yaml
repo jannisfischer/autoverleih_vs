@@ -1,29 +1,33 @@
 openapi: 3.0.0
 info:
   title: Adressbuch
-  version: '1.0'
-  description: 'Die Adressbuch-Anwendung aus der Vorlesung besteht aus einer Single Page App im Frontend und einem REST-Webservice im Backend. Diese API-Spezifikation beschreibt den Backend-Webservice, der im Grunde genommen nichts anderes macht, als Adressen in einer Datenbank zu verwalten.'
+  description: "Die Adressbuch-App nutzt einen simplen REST-Webservices zur Kommunikation\
+    \ mit dem Backend. Dieser ermöglicht die üblichen CRUD-Operationen zur Suche,\
+    \ Anzeige, Bearbeitung und Löschung von Adressen, wobei jede Adresse aus einem\
+    \ Vornamen, Nachnamen, Telefonnummer und eine E-Mailadresse besteht."
   contact:
     name: Dennis Schulmeister-Zimolong
-    url: 'https://www.wpvs.de'
+    url: https://www.wpvs.de
     email: dhbw@windows3.de
   license:
     name: CC-BY-4.0
+    url: https://creativecommons.org/licenses/by/4.0/deed.de
+  version: "1.0"
 servers:
-  - url: 'http://localhost:3000'
-    description: Lokale Entwicklung
-  - url: 'https://api.my-addressbook.com'
-    description: Produktion
-  - url: 'https://test-api.my-addressbook.com'
-    description: Demozugang
+- url: http://localhost:3000
+tags:
+- name: Index
+- name: Adresse
 paths:
   /:
     get:
-      summary: Wurzeladresse des Webservices
       tags:
-        - Start
+      - Index
+      summary: Wurzeladresse des Webservices
+      description: Liefert eine HATEOAS-Übersicht aller collections
+      operationId: index
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -31,25 +35,51 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/HATEOAS_Collection'
-      operationId: get
-      description: HATEOAS-Verlinkgen auf die einzelnen Collections (Listen mit Daten) des Webservices liefern
-  ########## ABRUF DER OPENAPI.YAML ###################
-  /openapi.yaml:
-    get:
-      summary: OpenAPI-Spezifikation des Webservices
-      tags:
-        - Start
-      responses:
-        '200':
-          description: OK
-  ###################################################
+                x-content-type: application/json
+
   /address:
     get:
-      summary: Adressliste durchsuchen
       tags:
-        - Adressliste
+      - Adresse
+      summary: Adressen suchen
+      description: Suche nach Adressen. Gibt eine Liste aller Adressen passend zu
+        den übergebenen Suchkriterien zurück.
+      operationId: search-address
+      parameters:
+      - name: first_name
+        in: query
+        description: Gesuchter Vorname
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: last_name
+        in: query
+        description: Gesuchter Nachname
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: phone
+        in: query
+        description: Gesuchte Telefonnummer
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: email
+        in: query
+        description: Gesuchte E-Mailadresse
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
@@ -57,133 +87,178 @@ paths:
                 type: array
                 items:
                   $ref: '#/components/schemas/Address'
-      operationId: get-address
-      description: Adressen suchen. Für die Suche können über die URL verschiedene Suchparameter wie der Vorname oder Nachname mitgegeben werden. Als Antwort wird immer eine Liste mit den gefundenen Adressen geliefert.
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: first_name
-          description: Gesuchter Vorname
-        - schema:
-            type: string
-          in: query
-          name: last_name
-          description: Gesuchter Nachname
-        - schema:
-            type: string
-          in: query
-          name: phone
-          description: Gesuchte Telefonnummer
-        - schema:
-            type: string
-          in: query
-          name: email
-          description: Gesuchte E-Mailadresse
+                x-content-type: application/json
     post:
-      summary: Neue Adresse anlegen
       tags:
-        - Adressliste
+      - Adresse
+      summary: Adresse anlegen
+      description: "Neue Adresse anlegen. Speichert die übergebene Adresse in der\
+        \ Datenbank. Der Wert des Feldes \"_id\" wird dabei ignoriert, da in jedem Fall\
+        \ eine neue Adresse mit neuer ID angelegt wird."
+      operationId: create-address
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Address'
       responses:
-        '201':
+        "201":
           description: Created
-          #### WARNING ######
           headers:
-            location:
+            Location:
               schema:
                 type: string
-          ###################
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Address'
-      operationId: post-address
-      description: 'Eine neue Adresse anlegen. Hierzu muss ein vollständiges Adressobjekt mit mindestens dem Vornamen und Nachnamen an den Server geschickt werden. Die ID wird beim Speichern von der Datenbank vergeben und kann deshalb vom Client nicht selbst gewählt werden. Ist sie in der Anfrage enthalten, wird sie vom Server ignoriert.'
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/Address'
-  '/address/{id}':
-    parameters:
-      - schema:
-          type: string
-        name: id
+
+  /address/{id}:
+    get:
+      tags:
+      - Adresse
+      summary: Adresse lesen
+      description: Liest eine einzelne Adresse vom Server.
+      operationId: get-address
+      parameters:
+      - name: id
         in: path
         required: true
-    get:
-      summary: Adresse lesen
-      tags:
-        - Adresse
+        style: simple
+        explode: false
+        schema:
+          type: string
       responses:
-        '200':
+        "200":
           description: OK
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Address'
-        '404':
+        "404":
           description: Not Found
-      operationId: get-address-id
-      description: Details zu einer einzelnen Adresse ermitteln.
     put:
-      summary: Adresse überschreiben
       tags:
-        - Adresse
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-        '404':
-          description: Not Found
-      operationId: put-address-id
-      description: 'Daten eines Adressbucheintrags überschrieben. Bei einer PUT-Anfrage muss hierfür der vollständige Datensatz an den Server geschickt werden, inklusive der Felder, die nicht geändert werden sollen. Die ID kann als einziges Feld nicht geändert werden. Sie wird aus der URL übernommen und im Request Body vom Server ignoriert.'
+      - Adresse überschreiben
+      summary: ""
+      description: "Überschreibt eine vorhandene Adresse auf dem Server. Bis auf die\
+        \ ID können alle Felder geändert werden. Der Versuch, die ID zu ändern, wird\
+        \ vom Server stillschweigend ignoriert."
+      operationId: update-address
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Address'
-        description: ''
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        "404":
+          description: Not Found
     patch:
-      summary: Einzelnes Feld ändern
       tags:
-        - Adresse
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Address'
-        '404':
-          description: Not Found
-      operationId: patch-address-id
-      description: 'Einzelne Felder eines Adressbucheintrags überschrieben. Bei einer PATCH-Anfrage müssen hierfür nur die Felder an den Server geschickt werden, die tatsächlich geändert werden sollen. Die ID kann als einziges Feld nicht geändert werden. Sie wird aus der URL übernommen und im Request Body vom Server ignoriert.'
+      - Einzelne Felder ändern
+      summary: Einzelne Adressfelder ändern
+      description: "Ändert einzelne Felder einer vorhandenen Adresse. Zulässig sind\
+        \ alle Felder bis auf die ID, da diese nachträglich nicht mehr verändert werden\
+        \ darf."
+      operationId: patch-address
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
       requestBody:
         content:
           application/json:
             schema:
               $ref: '#/components/schemas/Address'
-    delete:
-      summary: Adresse löschen
-      tags:
-        - Adresse
       responses:
-        '204':
-          description: No Content
-        '404':
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Address'
+        "404":
           description: Not Found
-      operationId: delete-address-id
-      description: Adressbucheintrag löschen
+    delete:
+      tags:
+      - Adresse
+      summary: Adresse löschen
+      description: Löscht eine Adresse auf dem Server.
+      operationId: delete-address
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+
 components:
   schemas:
-    Address:
-      title: Address
+    HATEOAS_Collection:
+      title: HATEOAS-Links einer Collection
       type: object
-      description: 'Ein Eintrag im Adressbuch, bestehend aus Vorname, Nachname, Telefonnumer und E-Mailadresse. Die ID wird von der Datenbank generiert und kann nachträglich nicht mehr verändert werden.'
+      properties:
+        _name:
+          type: string
+        query:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        create:
+          $ref: '#/components/schemas/HATEOAS_Link'
+
+    HATEOAS_Resource:
+      title: HATEOAS-Links einer Resource
+      type: object
+      properties:
+        read:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        update:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        patch:
+          $ref: '#/components/schemas/HATEOAS_Link'
+        delete:
+          $ref: '#/components/schemas/HATEOAS_Link'
+
+    HATEOAS_Link:
+      title: HATEOAS-Link
+      type: object
+      properties:
+        url:
+          type: string
+        method:
+          type: string
+        query_params:
+          type: array
+          items:
+            type: string
+
+    Address:
+      title: Adresse
+      type: object
       properties:
         _links:
           $ref: '#/components/schemas/HATEOAS_Resource'
@@ -197,44 +272,14 @@ components:
           type: string
         email:
           type: string
-    HATEOAS_Collection:
-      title: HATEOAS_Collection
-      type: object
-      description: HATEOAS-Verlinkung zu einer einzelnen Collection (Liste von Daten) des Webservices.
-      properties:
-        _name:
-          type: string
-        query:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        create:
-          $ref: '#/components/schemas/HATEOAS_Link'
-    HATEOAS_Resource:
-      title: HATEOAS_Resource
-      type: object
-      description: 'HATEOAS-Verlinkungen zu einem einzelnen Datensatz / Adressbucheintrag. Definiert, wie der Eintrag gelesen, aktualisiert, gepatcht oder gelöscht werden kann.'
-      properties:
-        read:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        update:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        patch:
-          $ref: '#/components/schemas/HATEOAS_Link'
-        delete:
-          $ref: '#/components/schemas/HATEOAS_Link'
-    HATEOAS_Link:
-      title: HATEOAS_Link
-      type: object
-      description: 'Eine einzelner HATEOAS-Verlinkung innerhalb des Webservices. Definiert die Adresse, URL und Query Parameter zum Aufruf der jeweiligen Aktion.'
-      properties:
-        url:
-          type: string
-        method:
-          type: string
-        query_params:
-          type: array
-          items:
-            type: string
-tags:
-  - name: Adresse
-  - name: Adressliste
-  - name: Start
+          pattern: "(.*@.*\\..*)?"
+      required:
+        - first_name
+        - last_name
+      example:
+        _id: "621ff9a936997df5baba746e"
+        first_name: "Fox"
+        last_name: "Mulder"
+        email: "mulder@xfiles.com"
+        phone: "+49 721 553181"
+  securitySchemes: {}

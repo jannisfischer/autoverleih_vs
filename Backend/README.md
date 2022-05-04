@@ -1,13 +1,12 @@
-SPA/REST-Vorlage: Backend
-=========================
-
-__TODO: Dokument überarbeiten__
+Adressbuch: Backend
+===================
 
 Inhaltsverzeichnis
 ------------------
 
 1. [Kurzbeschreibung](#kurzbeschreibung)
 1. [Start mit Docker Compose](#start-mit-docker-compose)
+1. [Bekannte Probleme unter Windows](#bekannte-probleme-unter-windows)
 1. [Manueller Start der MongoDB](#manueller-start-der-mongodb)
 1. [Node.js-Kommandozeilenbefehle](#nodejs-kommandozeilenbefehle)
 1. [Node.js in Docker ausführen](#nodejs-in-docker-ausführen)
@@ -16,7 +15,7 @@ Inhaltsverzeichnis
 Kurzbeschreibung
 ----------------
 
-Dies ist der backendseitige REST-Webservice der Beispiel-App. Es handelt sich
+Dies ist der backendseitige REST-Webservice der Adressbuch-App. Es handelt sich
 um ein einfaches nodeJS-Projekt mit dem Webframework [Restify](http://restify.com/).
 Die Schnittstelle des Webservices ist in der Datei `src/api/openapi.yaml`
 beschrieben.
@@ -36,6 +35,32 @@ Die nachfolgenden Abschnitte in dieser Datei beschreiben hingegen, was dabei im
 Hintergrund passiert bzw. wie das Backend mit und ohne Docker isoliert gestartet
 werden kann.
 
+Bekannte Probleme unter Windows
+-------------------------------
+
+Da Docker eine Linux-Technologie ist, verwendet Docker unter Windows inzwischen
+das „Windows Subsystem for Linux”, das die Ausführung von Linux-Software unter
+Windows ermöglicht. Mit diesem gibt es (Stand Mai 2022) jedoch ein bekanntes
+Problem, das den Automatischen Neustart des Backend-Services verhindert
+(siehe [Stackoverflow](https://stackoverflow.com/questions/39239686/nodemon-doesnt-restart-in-windows-docker-environment)),
+wenn sich die Quellcode-Dateien verändern. Als Folge daraus muss der Docker-Container
+nach jeder Codeänderung manuell neugestartet werden, um die Änderung zu testen.
+
+Als Lösung ändern Sie folgende Zeile in der Datei `package.json`:
+
+```json
+"start": "nodemon --inspect=0.0.0.0:9229 src/index.js",
+```
+
+Die neue Version muss wie folgt lauten:
+
+```json
+"start": "nodemon --legacy-watch --inspect=0.0.0.0:9229 src/index.js",
+```
+
+Dadurch werden die Änderungen an den Quellcode-Dateien auf eine andere Weise
+erkannt, so dass der automatische Neustart wieder funktioniert.
+
 Manueller Start der MongoDB
 ---------------------------
 
@@ -48,12 +73,12 @@ Am einfachsten kann dies durch Starten eines temporären Docker Container
 erreicht werden:
 
 ```sh
-docker network create examplenet
-docker run -d --name mongodb --net examplenet -p 27017:27017 mongo
+docker network create adressbuch
+docker run -d --name mongodb --net adressbuch -p 27017:27017 mongo
 ```
 
 Der erste Befehl muss dabei nur ausgeführt werden, wenn das virtuelle Netzwerk
-`examplenet` nicht bereits zuvor angelegt wurde. Der zweite Befehl startet
+`adressbuch` nicht bereits zuvor angelegt wurde. Der zweite Befehl startet
 eine temporäre MongoDB-Instanz und verbindet sie mit dem virtuellen Netzwerk.
 Zusätzlich wird der Port 27017 das eigenen Rechners an den Port 27017 des
 Containers weitergeleitet, um die Datenbank auch dann nutzen können, wenn der
@@ -63,7 +88,7 @@ Mit folgendem Befehl kann darüber hinaus ein grafisches Admin-Tool zur
 Verwaltung der Datenbank gestartet werden:
 
 ```sh
-docker run -d --name mongo-gui --net examplenet -p 8081:8081 -e ME_CONFIG_MONGODB_URL=mongodb://mongodb:27017/ mongo-express
+docker run -d --name mongo-gui --net adressbuch -p 8081:8081 -e ME_CONFIG_MONGODB_URL=mongodb://mongodb:27017/ mongo-express
 ```
 
 Mit folgenden Befehlen können die beiden Container wieder gestoppt und nicht
@@ -114,8 +139,8 @@ Node.js-Laufzeitumgebung mit dem Quellcode des Backend-Services und allen seinen
 Abhängigkeiten. Der Container kann somit direkt in eine produktive Systemlandschaft
 überführt werden. Folgende Befehle werden hierfür benötigt:
 
- * `docker build -t example-backend .` zum Bauen des Containers
- * `docker run -d -p 3000:3000 --net examplenet --name backend example-backend` zum Ausführen des Containers
+ * `docker build -t adressbuch-backend .` zum Bauen des Containers
+ * `docker run -d -p 3000:3000 --net adressbuch --name backend adressbuch-backend` zum Ausführen des Containers
  * `docker container stop backend` zum Stoppen des Containers
  * `docker system prune` zum Aufräumen nicht mehr benötigter Daten
 

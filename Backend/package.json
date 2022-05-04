@@ -1,8 +1,8 @@
 {
-  "name": "autovermietung",
+  "name": "adressbuch-backend",
   "version": "1.0.0",
-  "description": "Die Autovermietung verwaltet Fahrzeuge, die ausgeliehen werden können",
-  "author": "Jannis Fischer, Kevin Gosman, Tobias Reiser, Luca Schneider",
+  "description": "Adressbuch: Backend",
+  "author": "Dennis Schulmeister-Zimolong",
   "license": "CC-BY-4.0",
   "main": "src/index.js",
   "type": "module",
