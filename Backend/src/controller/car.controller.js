@@ -5,9 +5,9 @@ import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
 
 /**
- * HTTP-Controller-Klasse für Adressbucheinträge. Diese Klasse registriert
+ * HTTP-Controller-Klasse für Autobucheinträge. Diese Klasse registriert
  * alle notwendigen URL-Handler beim Webserver für einen einfachen REST-
- * Webservice zum Lesen und Schreiben von Adressen.
+ * Webservice zum Lesen und Schreiben von Autos.
  */
 export default class CarController {
     /**
@@ -52,7 +52,7 @@ export default class CarController {
 
     /**
      * GET /car
-     * Adressen suchen
+     * Autos suchen
      */
     async search(req, res, next) {
         let result = await this._service.search(req.query);
@@ -63,7 +63,7 @@ export default class CarController {
 
     /**
      * POST /car
-     * Neue Adresse anlegen
+     * Neues Auto anlegen
      */
     async create(req, res, next) {
         let result = await this._service.create(req.body);
@@ -78,7 +78,7 @@ export default class CarController {
 
     /**
      * GET /car/:id
-     * Adresse auslesen
+     * Auto auslesen
      */
     async read(req, res, next) {
         let result = await this._service.read(req.params.id);
@@ -96,7 +96,7 @@ export default class CarController {
     /**
      * PUT /car/:id
      * PATCH /car/:id
-     * Adresse ändern
+     * Auto ändern
      */
     async update(req, res, next) {
         let result = await this._service.update(req.params.id, req.body);
@@ -113,7 +113,7 @@ export default class CarController {
 
     /**
      * DELETE /car/:id
-     * Adresse löschen
+     * Auto löschen
      */
     async delete(req, res, next) {
         await this._service.delete(req.params.id)
