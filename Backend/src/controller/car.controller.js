@@ -1,24 +1,30 @@
+"use strict"
+
 import CarService from "../service/car.service.js";
 import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
 
 /**
- * HTTP-Controller-Klasse für alle Anfragen an /car/...
+ * HTTP-Controller-Klasse für Adressbucheinträge. Diese Klasse registriert
+ * alle notwendigen URL-Handler beim Webserver für einen einfachen REST-
+ * Webservice zum Lesen und Schreiben von Adressen.
  */
 export default class CarController {
     /**
-     * Konstruktor. Hier werden die HTTP-Handler-Methoden registriert.
+     * Konstruktor. Hier werden die URL-Handler registrert.
+     *
+     * @param {Object} server Restify Serverinstanz
+     * @param {String} prefix Gemeinsamer Prefix aller URLs
      */
     constructor(server, prefix) {
-        // Prefix merken
         this._service = new CarService();
         this._prefix = prefix;
 
-        // Collection: Autos (Liste von Autos)
+        // Collection: Autos
         server.get(prefix, wrapHandler(this, this.search));
         server.post(prefix, wrapHandler(this, this.create));
 
-        // Ressource: Auto (einzelnes Auto)
+        // Entity: Auto
         server.get(prefix + "/:id", wrapHandler(this, this.read));
         server.put(prefix + "/:id", wrapHandler(this, this.update));
         server.patch(prefix + "/:id", wrapHandler(this, this.update));
@@ -26,12 +32,17 @@ export default class CarController {
     }
 
     /**
-     * Hilfsmethode zum Einfügen der HATEOAS-Links in eine Antwort
+     * Hilfsmethode zum Einfügen von HATEOAS-Links in einen Datensatz.
+     * Dem Datensatz wird ein Attribut `_links` gemäß der OpenAPI-Spezifikation
+     * hinzugefügt, damit ein Client erkennen kann, wie er die Entität lesen,
+     * ändern oder löschen kann.
+     *
+     * @param {Object} entity Zu verändernder Datensatz.
      */
-    _insertHateoasLinks(result) {
-        let url = `${this._prefix}/${result._id}`;
+    _insertHateoasLinks(entity) {
+        let url = `${this._prefix}/${entity._id}`;
 
-        result._links = {
+        entity._links = {
             read:   {url: url, method: "GET"},
             update: {url: url, method: "PUT"},
             patch:  {url: url, method: "PATCH"},
@@ -40,79 +51,61 @@ export default class CarController {
     }
 
     /**
-     * GET /car:
-     * Liste von Autos liefern
+     * GET /car
+     * Adressen suchen
      */
     async search(req, res, next) {
-        // Suche in der Datenbank ausführen
         let result = await this._service.search(req.query);
-
-        // HATEOAS-Links einfügen
         result.forEach(entity => this._insertHateoasLinks(entity));
-
-        // Ergebnis zurückliefern
         res.sendResult(result);
         return next();
     }
 
     /**
-     * POST /car:
-     * Neues Auto anlegen
+     * POST /car
+     * Neue Adresse anlegen
      */
     async create(req, res, next) {
-        // Neue Adresse in der Datenbank speichern
         let result = await this._service.create(req.body);
-
-        // HATEOAS-Links einfügen
         this._insertHateoasLinks(result);
 
-        // Ergebnis zurückliefern
-        res.status(201);    // Created
+        res.status(201);
         res.header("Location", `${this._prefix}/${result._id}`);
         res.sendResult(result);
+
         return next();
     }
 
     /**
-     * GET /car/:id:
-     * Lesen eines einzelnen Autos anhand der ID
+     * GET /car/:id
+     * Adresse auslesen
      */
     async read(req, res, next) {
-        // Auto in der Datenbank suchen
         let result = await this._service.read(req.params.id);
+        this._insertHateoasLinks(result);
 
-        // Ergebnis zurückliefern
         if (result) {
-            // HATEOAS-Links einfügen
-            this._insertHateoasLinks(result);
-
-            // Gefundenes Auto schicken
             res.sendResult(result);
         } else {
-            throw new RestifyError.NotFoundError("Datensatz nicht gefunden.");
+            throw new RestifyError.NotFoundError("Auto nicht gefunden");
         }
 
         return next();
     }
 
     /**
-     * PUT /car/:id:
+     * PUT /car/:id
      * PATCH /car/:id
-     * Überschreiben eines einzelnen Autos
+     * Adresse ändern
      */
     async update(req, res, next) {
-        // Auto in der Datenbank ändern
         let result = await this._service.update(req.params.id, req.body);
+        this._insertHateoasLinks(result);
 
-        // Ergebnis zurückliefern
         if (result) {
-            // HATEOAS-Links einfügen
-            this._insertHateoasLinks(result);
-
-            // Gefundenes Auto schicken
             res.sendResult(result);
         } else {
-            throw new RestifyError.NotFoundError("Datensatz nicht gefunden.");
+            throw new RestifyError.NotFoundError("Auto nicht gefunden");
         }
 
         return next();
@@ -120,15 +113,12 @@ export default class CarController {
 
     /**
      * DELETE /car/:id
-     * Einzelnes Auto löschen
+     * Adresse löschen
      */
     async delete(req, res, next) {
-        // Auto in der Datenbank löschen
-        await this._service.delete(req.params.id);
-
-        // Ergebnis zurückliefern
+        await this._service.delete(req.params.id)
         res.status(204);
         res.sendResult({});
         return next();
     }
-};
+}
