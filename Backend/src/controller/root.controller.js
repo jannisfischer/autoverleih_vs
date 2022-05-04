@@ -20,7 +20,7 @@ import { readFile } from "fs/promises";
         this._openApiFile = openApiFile;
 
         server.get(prefix, wrapHandler(this, this.index));
-        server.get(prefix + "openapi.yaml", wrapHandler(this, this.openApi));
+        server.get(prefix + "/openapi.yaml", wrapHandler(this, this.openApi));
     }
 
     /**
