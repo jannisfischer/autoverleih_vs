@@ -99,7 +99,7 @@ new CarController(server, "/car");
 server.listen(config.port, config.host, function() {
     console.log();
     console.log("=================");
-    console.log("Adressbuch-Server");
+    console.log("Autoverleih-Server");
     console.log("=================");
     console.log();
     console.log("Ausführung mit folgender Konfiguration:");

@@ -1,8 +1,8 @@
 {
-  "name": "adressbuch-backend",
+  "name": "autoverleih_backend",
   "version": "1.0.0",
-  "description": "Adressbuch: Backend",
-  "author": "Dennis Schulmeister-Zimolong",
+  "description": "Autoverleih: Backend",
+  "author": "Jannis Fischer, Kevin Gosman, Tobias Reiser, Luca Schneider",
   "license": "CC-BY-4.0",
   "main": "src/index.js",
   "type": "module",
