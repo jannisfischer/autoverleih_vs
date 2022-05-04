@@ -21,7 +21,7 @@ export default class RootController {
         this._openApiFile = openApiFile;
 
         server.get(prefix, wrapHandler(this, this.index));
-        server.get(prefix + "/openapi.yaml", wrapHandler(this, this.openApi));
+        server.get(prefix + "/openapicar.yaml", wrapHandler(this, this.openApi));
     }
 
     /**
