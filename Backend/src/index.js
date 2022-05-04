@@ -78,7 +78,7 @@ server.opts("*", (req, res, next) => {
 
 // Anfragen und Antworten gegen die OpenAPI-Spezifikation prüfen und dabei
 // fehlerhafte Anfragen oder Antworten mit einer Exception ablehnen.
-const openApiFile = path.relative("", path.join(__dirname, "api", "openapi.yaml"));
+const openApiFile = path.relative("", path.join(__dirname, "api", "openapicar.yaml"));
 const openApiValidation = await OpenApiEnforcer(openApiFile, {fullResult: true});
 
 const openApiEnforcer = await OpenApiEnforcer(openApiFile, {
