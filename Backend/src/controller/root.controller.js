@@ -40,6 +40,16 @@ export default class RootController {
                 _name: "truck",
                 query: {url: "/truck", method: "GET", query_params: ["brand", "model", "type", "production_date", "status"]},
                 create: {url: "/truck", method: "POST"},
+            },
+            {
+                _name: "motorbike",
+                query: {url: "/motorbike", method: "GET", query_params: ["brand", "model", "type", "production_date", "status"]},
+                create: {url: "/motorbike", method: "POST"},
+            },
+            {
+                _name: "bicycle",
+                query: {url: "/bicycle", method: "GET", query_params: ["brand", "model", "type","size", "production_date", "status"]},
+                create: {url: "/bicycle", method: "POST"},
             }
         ]);
 
