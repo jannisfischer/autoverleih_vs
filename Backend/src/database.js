@@ -62,7 +62,7 @@ class DatabaseFactory {
         let truck = this.database.collection("trucks");
 
         if (await truck.estimatedDocumentCount() === 0) {
-            car.insertMany([
+            truck.insertMany([
                 {
                     brand: "Mercedes",
                     model: "Atego",
