@@ -2,6 +2,8 @@
 
 import Page from "./page";
 import HtmlTemplate from "./autoliste.html";
+import Backend from "./backend";
+import Buttonmethods from "./buttonmethods"
 
 export default class Autoliste extends Page {   
     constructor(app) {
@@ -11,6 +13,14 @@ export default class Autoliste extends Page {
     async init() {
         await super.init();
         this._title = "Autoliste";
+
+        const backend = new Backend
+        //Methoden aufgrund von Aufrufen aus verschiedenen Dateien in Klasse ausgelagert
+        const buttonmethods = new Buttonmethods
+        console.log(buttonmethods)
+        await backend.init()
+        let result = await backend.fetch("GET", "/car")
+        console.log(result)
         //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
         //_app.backend.fetch() returned ein JSON Array mit Autos. Gemockt:
         let dummyCarArray = [
@@ -18,7 +28,9 @@ export default class Autoliste extends Page {
             {id: 123455, brand: "Peugeot", model:"206cc", type: "convertible", production_date:" 01.01.2001", status: "available"}
         ]
         const list = this._mainElement.firstElementChild.lastElementChild
-        let carlist = dummyCarArray.map( (car, index) => {
+        let carlist = result.map( (car, index) => {
+
+
             let listItem = document.createElement("li")
             let carInfo =document.createElement("div")
             carInfo.className="car-infos"
@@ -27,13 +39,23 @@ export default class Autoliste extends Page {
 
             let deleteButton = document.createElement("button")
             let rentButton = document.createElement("button")
+            let giveBackButton = document.createElement("button")
             deleteButton.className="btn btn-danger"
             rentButton.className="btn btn-info"
+            giveBackButton.className="btn btn-info"
             deleteButton.innerHTML="Löschen"
             rentButton.innerHTML="Ausleihen"
-            carButtons.appendChild(deleteButton)
-            carButtons.appendChild(rentButton)
+            giveBackButton.innerHTML="Zurückgeben"
+            rentButton.addEventListener("click", () => buttonmethods.markAsRented(backend, car))
+            giveBackButton.addEventListener("click", () => buttonmethods.markAsAvailable(backend, car))
 
+            carButtons.appendChild(deleteButton)
+            if(car.status=="available") {
+                carButtons.appendChild(rentButton)
+                }
+            else {
+                carButtons.appendChild(giveBackButton)
+            }
 
             listItem.className="car-container"
 
