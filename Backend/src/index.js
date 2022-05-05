@@ -10,6 +10,7 @@ import AdressController from "./controller/address.controller.js";
 import CarController from "./controller/car.controller.js";
 import TruckController from "./controller/truck.controller.js";
 import MotorbikeController from "./controller/motorbike.controller.js";
+import BicycleController from "./controller/bicycle.controller.js";
 
 // Verzeichnisnamen der Quellcodedatei ermitteln
 import path from "path";
@@ -98,6 +99,7 @@ new AdressController(server, "/address");
 new CarController(server, "/car");
 new TruckController(server, "/truck");
 new MotorbikeController(server, "/motorbike");
+new BicycleController(server, "/bicycle");
 
 // Server tatsächlich starten
 server.listen(config.port, config.host, function() {
