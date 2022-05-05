@@ -322,6 +322,14 @@ paths:
         explode: true
         schema:
           type: string
+      - name: size
+        in: query
+        description: Gesuchte Fahrradgröße
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
       - name: production_date
         in: query
         description: Gesuchtes Herstelldatum
@@ -930,6 +938,8 @@ components:
           type: string
         type:
           type: string
+        size: 
+          type: string
         production_date:
           type: string
         status:
@@ -942,6 +952,7 @@ components:
         brand: "Fischer"
         model: "x93A"
         type: "Mountainbike"
+        size: "groß"
         production_date: "01.07.2021"
         status: "available"
   securitySchemes: {}
