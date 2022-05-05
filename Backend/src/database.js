@@ -114,6 +114,37 @@ class DatabaseFactory {
                 },
             ]);
         }
+
+        let bicycle = this.database.collection("bicycles");
+
+        if (await bicycle.estimatedDocumentCount() === 0) {
+            bicycle.insertMany([
+                {
+                    brand: "Serious",
+                    model: "Rockville",
+                    type: "Mountainbike",
+                    size: "27.5",
+                    production_date: "20.06.2010",
+                    status: "available",
+                },
+                {
+                    brand: "Focus",
+                    model: "Whistler 3.6",
+                    type: "Mountainbike",
+                    size: "29",
+                    production_date: "24.10.2017",
+                    status: "available",
+                },
+                {
+                    brand: "Vermont",
+                    model: "Kinara",
+                    type: "Trekkingrad",
+                    size: "28",
+                    production_date: "03.12.2019",
+                    status: "available",
+                },
+            ]);
+        }
     }
 }
 
