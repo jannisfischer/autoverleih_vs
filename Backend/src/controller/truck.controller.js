@@ -1,6 +1,6 @@
 "use strict"
 
-import TruckService from "../service/truckService.js";
+import TruckService from "../service/truck.service.js";
 import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
 
