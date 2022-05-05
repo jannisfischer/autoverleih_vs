@@ -33,6 +33,18 @@ class App {
                 url: "/autoliste",
                 show: () => this._gotoCars()
             },
+                        {
+                url: "/lkwliste",
+                show: () => this._gotoTrucks()
+            },
+                        {
+                url: "/bicycleliste",
+                show: () => this._gotoBicycles()
+            },
+                        {
+                url: "/bikeliste",
+                show: () => this._gotoBikes()
+            },
             {
                 url: "/auto_erstellen",
                 show: () => this._gotoCreateCar()
@@ -91,6 +103,42 @@ class App {
             let page = new Autoliste(this);
             await page.init();
             this._showPage(page, "autoliste");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+        async _gotoTrucks() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: Lkwliste} = await import("./lkwliste.js");
+
+            let page = new Lkwliste(this);
+            await page.init();
+            this._showPage(page, "lkwliste");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+        async _gotoBicycles() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: Bicycleliste} = await import("./bicycleliste.js");
+
+            let page = new Bicycleliste(this);
+            await page.init();
+            this._showPage(page, "bicycleliste");
+        } catch (ex) {
+            this.showException(ex);
+        }
+    }
+        async _gotoBikes() {
+        try {
+            // Dynamischer Import, vgl. https://javascript.info/modules-dynamic-imports
+            let {default: Bikeliste} = await import("./bikeliste.js");
+
+            let page = new Bikeliste(this);
+            await page.init();
+            this._showPage(page, "bikeliste");
         } catch (ex) {
             this.showException(ex);
         }
