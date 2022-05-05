@@ -48,6 +48,7 @@ export default class Autoliste extends Page {
             giveBackButton.innerHTML="Zurückgeben"
             rentButton.addEventListener("click", () => buttonmethods.markAsRented(backend, car))
             giveBackButton.addEventListener("click", () => buttonmethods.markAsAvailable(backend, car))
+            deleteButton.addEventListener("click", () => buttonmethods.deleteVehicle(backend, car))
 
             carButtons.appendChild(deleteButton)
             if(car.status=="available") {
