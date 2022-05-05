@@ -44,6 +44,7 @@ export default class BicycleService {
             brand:           bicycle.brand           || "",
             model:           bicycle.model           || "",
             type:            bicycle.type            || "",
+            size:            bicycle.size            || "",
             production_date: bicycle.production_date || "",
             status:          bicycle.status          || "",
         };
@@ -82,6 +83,7 @@ export default class BicycleService {
         if (bicycle.brand)              updateDoc.$set.brand            = bicycle.brand;
         if (bicycle.model)              updateDoc.$set.model            = bicycle.model;
         if (bicycle.type)               updateDoc.$set.type             = bicycle.type;
+        if (bicycle.size)               updateDoc.$set.size             = bicycle.size;
         if (bicycle.production_date)    updateDoc.$set.production_date  = bicycle.production_date;
         if (bicycle.status)             updateDoc.$set.status           = bicycle.status;
 
