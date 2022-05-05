@@ -86,6 +86,34 @@ class DatabaseFactory {
                 },
             ]);
         }
+
+        let motorbike = this.database.collection("motorbikes");
+
+        if (await motorbike.estimatedDocumentCount() === 0) {
+            motorbike.insertMany([
+                {
+                    brand: "Suzuki",
+                    model: "Hayabusa",
+                    type: "Sportbike",
+                    production_date: "22.03.2019",
+                    status: "available",
+                },
+                {
+                    brand: "KTM",
+                    model: "150 EXC",
+                    type: "Enduro",
+                    production_date: "12.01.2022",
+                    status: "available",
+                },
+                {
+                    brand: "Honda",
+                    model: "ST1300 Pan European",
+                    type: "Tourer",
+                    production_date: "19.04.2003",
+                    status: "available",
+                },
+            ]);
+        }
     }
 }
 
