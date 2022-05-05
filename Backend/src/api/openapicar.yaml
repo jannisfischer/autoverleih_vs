@@ -121,6 +121,258 @@ paths:
               schema:
                 $ref: '#/components/schemas/Car'
 
+  /motorbike:
+    get:
+      tags:
+      - Motorrad  
+      summary: Motorräder suchen
+      description: Suche nach Motorräder. Gibt eine Liste aller Motorräder passend zu
+        den übergebenen Suchkriterien zurück.
+      operationId: search-motorbike
+      parameters:
+      - name: brand
+        in: query
+        description: Gesuchte Marke
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: model
+        in: query
+        description: Gesuchtes Model
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Gesuchter Motorradtyp
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: production_date
+        in: query
+        description: Gesuchtes Herstelldatum
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Gesuchter Status
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Motorbike'
+                x-content-type: application/json
+    post:
+      tags:
+      - Motorrad
+      summary: Motorrad anlegen
+      description: "Neues Motorrad anlegen. Speichert das übergebene Motorrad in der\
+        \ Datenbank. Der Wert des Feldes \"_id\" wird dabei ignoriert, da in jedem Fall\
+        \ ein neues Motorrad mit neuer ID angelegt wird."
+      operationId: create-motorbike
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Motorbike'
+      responses:
+        "201":
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Motorbike'
+
+  /truck:
+    get:
+      tags:
+      - Lastkraftwagen   
+      summary: LKWs suchen
+      description: Suche nach LKWs. Gibt eine Liste aller LKWs passend zu
+        den übergebenen Suchkriterien zurück.
+      operationId: search-trucks
+      parameters:
+      - name: brand
+        in: query
+        description: Gesuchte Marke
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: model
+        in: query
+        description: Gesuchtes Model
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Gesuchter LKW-Typ
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: production_date
+        in: query
+        description: Gesuchtes Herstelldatum
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Gesuchter Status
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Truck'
+                  x-content-type: application/json
+    post:
+      tags:
+      - LKW
+      summary: LKW anlegen
+      description: "Neuen LKW anlegen. Speichert den übergebenen LKW in der\
+        \ Datenbank. Der Wert des Feldes \"_id\" wird dabei ignoriert, da in jedem Fall\
+        \ ein neuer LKW mit neuer ID angelegt wird."
+      operationId: create-truck
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Truck'
+      responses:
+        "201":
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Truck'
+
+  /bicycle:
+    get:
+      tags:
+      - Fahrrad  
+      summary: Fahrräder suchen
+      description: Suche nach Fahrräder. Gibt eine Liste aller Fahrräder passend zu
+        den übergebenen Suchkriterien zurück.
+      operationId: search-bicycle
+      parameters:
+      - name: brand
+        in: query
+        description: Gesuchte Marke
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: model
+        in: query
+        description: Gesuchtes Model
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: type
+        in: query
+        description: Gesuchter Fahrradtyp
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: production_date
+        in: query
+        description: Gesuchtes Herstelldatum
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: status
+        in: query
+        description: Gesuchter Status
+        required: false
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Motorbike'
+                x-content-type: application/json
+    post:
+      tags:
+      - Fahrrad
+      summary: Fahrrad anlegen
+      description: "Neues Fahrrad anlegen. Speichert das übergebene Fahrrad in der\
+        \ Datenbank. Der Wert des Feldes \"_id\" wird dabei ignoriert, da in jedem Fall\
+        \ ein neues Fahrrad mit neuer ID angelegt wird."
+      operationId: create-bicycle
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Motorbike'
+      responses:
+        "201":
+          description: Created
+          headers:
+            Location:
+              schema:
+                type: string
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Motorbike'
+  
   /car/{id}:
     get:
       tags:
@@ -225,6 +477,318 @@ paths:
         "404":
           description: Not Found
 
+  /motorbike/{id}:
+    get:
+      tags:
+      - Motorrad
+      summary: Motorrad lesen
+      description: Liest ein einzelnes Auto vom Server.
+      operationId: get-motorbike
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Car'
+        "404":
+          description: Not Found
+    put:
+      tags:
+      - Motorrad überschreiben
+      summary: ""
+      description: "Überschreibt ein vorhandenes Motorrad auf dem Server. Bis auf die\
+        \ ID können alle Felder geändert werden. Der Versuch, die ID zu ändern, wird\
+        \ vom Server stillschweigend ignoriert."
+      operationId: update-motorbike
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Motorbike'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Motorbike'
+        "404":
+          description: Not Found
+    patch:
+      tags:
+      - Einzelne Felder ändern
+      summary: Einzelne Motorradfelder ändern
+      description: "Ändert einzelne Felder eines vorhandenen Motorräder. Zulässig sind\
+        \ alle Felder bis auf die ID, da diese nachträglich nicht mehr verändert werden\
+        \ darf."
+      operationId: patch-motorbike
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Motorbike'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Motorbike'
+        "404":
+          description: Not Found
+    delete:
+      tags:
+      - Motorrad
+      summary: Motorrad löschen
+      description: Löscht ein Motorrad auf dem Server.
+      operationId: delete-motorbike
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+
+  /truck/{id}:
+    get:
+      tags:
+      - LKW
+      summary: LKW lesen
+      description: Liest ein einzelnes LKW vom Server.
+      operationId: get-truck
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Truck'
+        "404":
+          description: Not Found
+    put:
+      tags:
+      - LKW überschreiben
+      summary: ""
+      description: "Überschreibt ein vorhandenes LKW auf dem Server. Bis auf die\
+        \ ID können alle Felder geändert werden. Der Versuch, die ID zu ändern, wird\
+        \ vom Server stillschweigend ignoriert."
+      operationId: update-truck
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Truck'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Truck'
+        "404":
+          description: Not Found
+    patch:
+      tags:
+      - Einzelne Felder ändern
+      summary: Einzelne LKW-Felder ändern
+      description: "Ändert einzelne Felder eines vorhandenen LKW. Zulässig sind\
+        \ alle Felder bis auf die ID, da diese nachträglich nicht mehr verändert werden\
+        \ darf."
+      operationId: patch-truck
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Truck'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Truck'
+        "404":
+          description: Not Found
+    delete:
+      tags:
+      - LKW
+      summary: LKW löschen
+      description: Löscht ein LKW auf dem Server.
+      operationId: delete-truck
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+
+  /bicycle/{id}:
+    get:
+      tags:
+      - Fahrrad
+      summary: Fahrrad lesen
+      description: Liest ein einzelnes Fahrrad vom Server.
+      operationId: get-bicyicle
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bicycle'
+        "404":
+          description: Not Found
+    put:
+      tags:
+      - Fahrrad überschreiben
+      summary: ""
+      description: "Überschreibt ein vorhandenes Fahrrad auf dem Server. Bis auf die\
+        \ ID können alle Felder geändert werden. Der Versuch, die ID zu ändern, wird\
+        \ vom Server stillschweigend ignoriert."
+      operationId: update-bicycle
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bicycle'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bicycle'
+        "404":
+          description: Not Found
+    patch:
+      tags:
+      - Einzelne Felder ändern
+      summary: Einzelne Fahrradfelder ändern
+      description: "Ändert einzelne Felder eines vorhandenen Fahrrad. Zulässig sind\
+        \ alle Felder bis auf die ID, da diese nachträglich nicht mehr verändert werden\
+        \ darf."
+      operationId: patch-bicycle
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Bicycle'
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Bicycle'
+        "404":
+          description: Not Found
+    delete:
+      tags:
+      - Fahrrad
+      summary: Fahrrad löschen
+      description: Löscht ein Fahrrad auf dem Server.
+      operationId: delete-bicycle
+      parameters:
+      - name: id
+        in: path
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: OK
+        "404":
+          description: Not Found
+
 components:
   schemas:
     HATEOAS_Collection:
@@ -290,6 +854,94 @@ components:
         brand: "Volkswagen"
         model: "Touran"
         type: "Van"
+        production_date: "01.07.2021"
+        status: "available"
+
+    Motorbike:
+      title: Motorrad
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/HATEOAS_Resource'
+        _id:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        type:
+          type: string
+        production_date:
+          type: string
+        status:
+          type: string
+      required:
+        - brand
+        - model
+      example:
+        _id: "621ff9a936997df555ba746e"
+        brand: "BMW"
+        model: "M 1000 RR"
+        type: "Sport"
+        production_date: "01.07.2021"
+        status: "available"
+
+    Truck:
+      title: LKW
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/HATEOAS_Resource'
+        _id:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        type:
+          type: string
+        production_date:
+          type: string
+        status:
+          type: string
+      required:
+        - brand
+        - model
+      example:
+        _id: "621ff9a476997df5baba746e"
+        brand: "Mercedes-Benz"
+        model: "Model83"
+        type: "Typ 2"
+        production_date: "01.07.2021"
+        status: "available"
+
+
+    Bicycle:
+      title: Fahrrad
+      type: object
+      properties:
+        _links:
+          $ref: '#/components/schemas/HATEOAS_Resource'
+        _id:
+          type: string
+        brand:
+          type: string
+        model:
+          type: string
+        type:
+          type: string
+        production_date:
+          type: string
+        status:
+          type: string
+      required:
+        - brand
+        - model
+      example:
+        _id: "621ff9a126997df5baba746e"
+        brand: "Fischer"
+        model: "x93A"
+        type: "Mountainbike"
         production_date: "01.07.2021"
         status: "available"
   securitySchemes: {}

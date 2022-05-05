@@ -58,6 +58,62 @@ class DatabaseFactory {
                 },
             ]);
         }
+
+        let truck = this.database.collection("trucks");
+
+        if (await truck.estimatedDocumentCount() === 0) {
+            truck.insertMany([
+                {
+                    brand: "Mercedes",
+                    model: "Atego",
+                    type: "N2",
+                    production_date: "01.04.2015",
+                    status: "available",
+                },
+                {
+                    brand: "MAN",
+                    model: "TGX",
+                    type: "N3",
+                    production_date: "15.02.2021",
+                    status: "rented",
+                },
+                {
+                    brand: "MAN",
+                    model: "TGL",
+                    type: "N2",
+                    production_date: "24.04.2011",
+                    status: "available",
+                },
+            ]);
+        }
+
+        let motorbike = this.database.collection("motorbikes");
+
+        if (await motorbike.estimatedDocumentCount() === 0) {
+            motorbike.insertMany([
+                {
+                    brand: "Suzuki",
+                    model: "Hayabusa",
+                    type: "Sportbike",
+                    production_date: "22.03.2019",
+                    status: "available",
+                },
+                {
+                    brand: "KTM",
+                    model: "150 EXC",
+                    type: "Enduro",
+                    production_date: "12.01.2022",
+                    status: "available",
+                },
+                {
+                    brand: "Honda",
+                    model: "ST1300 Pan European",
+                    type: "Tourer",
+                    production_date: "19.04.2003",
+                    status: "available",
+                },
+            ]);
+        }
     }
 }
 
