@@ -8,7 +8,7 @@ import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
 import AdressController from "./controller/address.controller.js";
 import CarController from "./controller/car.controller.js";
-import TruckController from "./controller/truckController.js";
+import TruckController from "./controller/truck.controller.js";
 import MotorbikeController from "./controller/motorbike.controller.js";
 
 // Verzeichnisnamen der Quellcodedatei ermitteln
