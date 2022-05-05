@@ -5,7 +5,21 @@
         background: #fff;
         display: flex;
         padding: 15px;
+        flex-direction: column;
     }
+    #create-form {
+        padding: 15px;
+    }
+    #create-form .input-container {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 10px;
+    }
+    .input-container p {
+        margin-bottom: 0;
+        width: 30%;
+    }
+
 
 </style>
 
@@ -13,6 +27,27 @@
 <main>
     <div class="container-main">
         <h2>Auto erstellen</h2>
+        <div id=create-form>
+            <form>
+                <div class="input-container">
+                    <p>Marke</p>
+                    <input id="brand-input" placeholder="Die Automarke"/>
+                </div>
+                <div class="input-container">
+                    <p>Modell</p>
+                    <input id="model-input" placeholder="Das Modell"/>
+                </div>
+                <div class="input-container">
+                    <p>Typ</p>
+                    <input id="type-input" placeholder="Typ des Autos z.B.: Van"/>
+                </div>
+                <div class="input-container">
+                    <p>Produktionsdatum</p>
+                    <input id="date-input" placeholder="Das Produktionsdatum des Autos"/>
+                </div>
+            </form>
+            <button type=submit id="submit-button" class="btn btn-info">Auto erstellen</button>
+        </div>
 
     </div>
     <!-- TODO: HTML-Gerüst definieren -->

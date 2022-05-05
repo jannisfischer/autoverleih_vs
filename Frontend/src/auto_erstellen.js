@@ -2,6 +2,7 @@ import Page from "./page";
 import HtmlTemplate from "./auto_erstellen.html";
 
 
+
 export default class Auto_Erstellen extends Page {
     constructor(app) {
         super(app,HtmlTemplate);
@@ -10,9 +11,29 @@ export default class Auto_Erstellen extends Page {
 
     async init() {
         await super.init();
+        const backend = this._app.backend
+
         this._title = "Auto erstellen";
-        //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
-        //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
-        //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
+
+        const createCar = async() => {
+            let brandValue=form.children[0].lastElementChild.value
+            let modelValue=form.children[1].lastElementChild.value
+            let typeValue=form.children[2].lastElementChild.value
+            let dateValue=form.children[3].lastElementChild.value
+
+            let body = {body: {
+                brand: brandValue,
+                model: modelValue,
+                type: typeValue,
+                date: dateValue,
+                status: "available"
+            }}
+            console.log(brandValue, modelValue, typeValue, dateValue)
+            await backend.fetch("POST", "/car", body)
+            alert("Auto wurde erstellt und zur Leihe registriert!")
+        }
+        let form = this._mainElement.firstElementChild.lastElementChild.firstElementChild
+        let submitButton = this._mainElement.firstElementChild.lastElementChild.lastElementChild
+        submitButton.addEventListener("click", createCar)
     }
 }
