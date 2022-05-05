@@ -32,10 +32,10 @@ export default class CarService {
     }
 
     /**
-     * Speichern eines neuen Autos.
+     * Speichern eines neuen LKWs.
      *
-     * @param {Object} truck Zu speichernde Autodaten
-     * @return {Promise} Gespeicherte Autodaten
+     * @param {Object} truck Zu speichernde Truckdaten
+     * @return {Promise} Gespeicherte Truckdaten
      */
     async create(truck) {
         truck = truck || {};
@@ -53,10 +53,10 @@ export default class CarService {
     }
 
     /**
-     * Auslesen eines vorhandenen Autos anhand der ID.
+     * Auslesen eines vorhandenen LKWs anhand der ID.
      *
-     * @param {String} id ID des gesuchten Autos
-     * @return {Promise} Gefundene Autodaten
+     * @param {String} id ID des gesuchten LKWs
+     * @return {Promise} Gefundene Truckdaten
      */
     async read(id) {
         let result = await this._trucks.findOne({_id: new ObjectId(id)});
@@ -64,12 +64,12 @@ export default class CarService {
     }
 
     /**
-     * Aktualisierung eines Autos, durch Überschreiben einzelner Felder
-     * oder des gesamten Autoobjekts (ohne die ID).
+     * Aktualisierung eines LKWs, durch Überschreiben einzelner Felder
+     * oder des gesamten LKW-objekts (ohne die ID).
      *
-     * @param {String} id ID des gesuchten Autos
-     * @param {[type]} car Zu speichernde Autodaten
-     * @return {Promise} Gespeicherte Autodaten oder undefined
+     * @param {String} id ID des gesuchten LKWs
+     * @param {[type]} car Zu speichernde Truckdaten
+     * @return {Promise} Gespeicherte Truckdaten oder undefined
      */
     async update(id, car) {
         let oldTruck = await this._trucks.findOne({_id: new ObjectId(id)});
@@ -90,9 +90,9 @@ export default class CarService {
     }
 
     /**
-     * Löschen eines Autos anhand ihrer ID.
+     * Löschen eines LKWs anhand ihrer ID.
      *
-     * @param {String} id ID des gesuchten Autos
+     * @param {String} id ID des gesuchten LKWs
      * @return {Promise} Anzahl der gelöschten Datensätze
      */
     async delete(id) {
