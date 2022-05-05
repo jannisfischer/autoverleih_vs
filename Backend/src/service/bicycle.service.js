@@ -13,7 +13,7 @@ export default class BicycleService {
      * Konstruktor.
      */
     constructor() {
-        this._bicycles = DatabaseFactory.database.collection("trucks");
+        this._bicycles = DatabaseFactory.database.collection("bicycles");
     }
 
     /**
