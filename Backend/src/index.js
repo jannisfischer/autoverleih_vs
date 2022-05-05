@@ -8,6 +8,7 @@ import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
 import AdressController from "./controller/address.controller.js";
 import CarController from "./controller/car.controller.js";
+import TruckController from "./controller/truckController.js";
 
 // Verzeichnisnamen der Quellcodedatei ermitteln
 import path from "path";
@@ -94,6 +95,7 @@ server.use(OpenApiEnforcerMiddleware(openApiEnforcer));
 new RootController(server, "/", openApiFile);
 new AdressController(server, "/address");
 new CarController(server, "/car");
+new TruckController(server, "/truck");
 
 // Server tatsächlich starten
 server.listen(config.port, config.host, function() {

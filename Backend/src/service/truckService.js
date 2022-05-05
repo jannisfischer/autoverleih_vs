@@ -8,7 +8,7 @@ import {ObjectId} from "mongodb";
  * eigentliche Anwendungslogik losgelöst vom technischen Übertragungsweg.
  * Die Adressen werden der Einfachheit halber in einer MongoDB abgelegt.
  */
-export default class CarService {
+export default class TruckService {
     /**
      * Konstruktor.
      */

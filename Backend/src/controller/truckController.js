@@ -1,6 +1,6 @@
 "use strict"
 
-import TruckService from "../service/car.service.js";
+import TruckService from "../service/truckService.js";
 import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
 
@@ -17,7 +17,7 @@ export default class TruckController {
      * @param {String} prefix Gemeinsamer Prefix aller URLs
      */
     constructor(server, prefix) {
-        this._service = new Truck();
+        this._service = new TruckService();
         this._prefix = prefix;
 
         // Collection: Trucks
