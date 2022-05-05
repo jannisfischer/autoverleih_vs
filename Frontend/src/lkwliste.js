@@ -1,16 +1,16 @@
 "use strict";
 
 import Page from "./page";
-import HtmlTemplate from "./truckliste.html";
+import HtmlTemplate from "./lkwliste.html";
 
-export default class Autoliste extends Page {   
+export default class Lkwliste extends Page {   
     constructor(app) {
         super(app, HtmlTemplate);
     }
 
     async init() {
         await super.init();
-        this._title = "Autoliste";
+        this._title = "Lkwliste";
         //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
         //_app.backend.fetch() returned ein JSON Array mit Autos. Gemockt:
         let dummyTruckArray = [
