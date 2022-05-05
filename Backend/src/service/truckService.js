@@ -48,7 +48,7 @@ export default class TruckService {
             status:          truck.status          || "",
         };
 
-        let result = await this._trucks.insertOne(newtruck);
+        let result = await this._trucks.insertOne(newTruck);
         return await this._trucks.findOne({_id: result.insertedId});
     }
 
@@ -71,7 +71,7 @@ export default class TruckService {
      * @param {[type]} car Zu speichernde Truckdaten
      * @return {Promise} Gespeicherte Truckdaten oder undefined
      */
-    async update(id, car) {
+    async update(id, truck) {
         let oldTruck = await this._trucks.findOne({_id: new ObjectId(id)});
         if (!oldTruck) return;
 
