@@ -2,6 +2,8 @@
 
 import Page from "./page";
 import HtmlTemplate from "./lkwliste.html";
+import Buttonmethods from "./buttonmethods"
+
 
 export default class Lkwliste extends Page {   
     constructor(app) {
@@ -11,6 +13,10 @@ export default class Lkwliste extends Page {
     async init() {
         await super.init();
         this._title = "Lkwliste";
+        const backend = this._app.backend
+        //Methoden aufgrund von Aufrufen aus verschiedenen Dateien in Klasse ausgelagert
+        const buttonmethods = new Buttonmethods
+        let result = await backend.fetch("GET", "/truck")
         //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
         //_app.backend.fetch() returned ein JSON Array mit Autos. Gemockt:
         let dummyTruckArray = [
@@ -18,7 +24,7 @@ export default class Lkwliste extends Page {
             {id: 123455, brand: "Mercedes", model:"LKW2", type: "3.5T", production_date:" 01.01.2001", status: "available"}
         ]
         const list = this._mainElement.firstElementChild.lastElementChild
-        let trucklist = dummyTruckArray.map( (truck, index) => {
+        let trucklist = result.map( (truck, index) => {
             let listItem = document.createElement("li")
             let truckInfo =document.createElement("div")
             truckInfo.className="truck-infos"
@@ -27,12 +33,25 @@ export default class Lkwliste extends Page {
 
             let deleteButton = document.createElement("button")
             let rentButton = document.createElement("button")
+            let giveBackButton = document.createElement("button")
             deleteButton.className="btn btn-danger"
             rentButton.className="btn btn-info"
+            giveBackButton.className="btn btn-info"
             deleteButton.innerHTML="Löschen"
             rentButton.innerHTML="Ausleihen"
+            giveBackButton.innerHTML="Zurückgeben"
+            rentButton.addEventListener("click", () => buttonmethods.markAsRented(backend, truck))
+            giveBackButton.addEventListener("click", () => buttonmethods.markAsAvailable(backend, truck))
+            deleteButton.addEventListener("click", () => buttonmethods.deleteVehicle(backend, truck))
+
             truckButtons.appendChild(deleteButton)
-            truckButtons.appendChild(rentButton)
+            if(truck.status=="available") {
+                truckButtons.appendChild(rentButton)
+                }
+            else {
+                truckButtons.appendChild(giveBackButton)
+            }
+
 
 
             listItem.className="truck-container"

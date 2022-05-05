@@ -2,7 +2,6 @@
 
 import Page from "./page";
 import HtmlTemplate from "./autoliste.html";
-import Backend from "./backend";
 import Buttonmethods from "./buttonmethods"
 
 export default class Autoliste extends Page {   
@@ -14,11 +13,9 @@ export default class Autoliste extends Page {
         await super.init();
         this._title = "Autoliste";
 
-        const backend = new Backend
+        const backend = this._app.backend
         //Methoden aufgrund von Aufrufen aus verschiedenen Dateien in Klasse ausgelagert
         const buttonmethods = new Buttonmethods
-        console.log(buttonmethods)
-        await backend.init()
         let result = await backend.fetch("GET", "/car")
         console.log(result)
         //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
@@ -48,6 +45,7 @@ export default class Autoliste extends Page {
             giveBackButton.innerHTML="Zurückgeben"
             rentButton.addEventListener("click", () => buttonmethods.markAsRented(backend, car))
             giveBackButton.addEventListener("click", () => buttonmethods.markAsAvailable(backend, car))
+            deleteButton.addEventListener("click", () => buttonmethods.deleteVehicle(backend, car))
 
             carButtons.appendChild(deleteButton)
             if(car.status=="available") {

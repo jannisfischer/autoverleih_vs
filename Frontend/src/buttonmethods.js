@@ -30,5 +30,10 @@ export default class Buttonmethods{
                 await backend.fetch(links.method, links.url, body)
                 alert("Das Fahrzeug wurde zurückgegeben!")
             }
+            async deleteVehicle(backend, vehicle) {
+                let links = vehicle._links.delete
+                await backend.fetch(links.method, links.url)
+                alert("Das Fahrzeug wurde gelöscht!")
+            }
         
 }
