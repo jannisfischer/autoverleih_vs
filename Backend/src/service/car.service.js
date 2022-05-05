@@ -4,7 +4,7 @@ import DatabaseFactory from "../database.js";
 import {ObjectId} from "mongodb";
 
 /**
- * Geschäftslogik zur Verwaltung von Adressen. Diese Klasse implementiert die
+ * Geschäftslogik zur Verwaltung von Autos. Diese Klasse implementiert die
  * eigentliche Anwendungslogik losgelöst vom technischen Übertragungsweg.
  * Die Adressen werden der Einfachheit halber in einer MongoDB abgelegt.
  */
@@ -17,13 +17,13 @@ export default class CarService {
     }
 
     /**
-     * Adressen suchen. Unterstützt wird lediglich eine ganz einfache Suche,
+     * Autos suchen. Unterstützt wird lediglich eine ganz einfache Suche,
      * bei der einzelne Felder auf exakte Übereinstimmung geprüft werden.
      * Zwar unterstützt MongoDB prinzipiell beliebig komplexe Suchanfragen.
      * Um das Beispiel klein zu halten, wird dies hier aber nicht unterstützt.
      *
      * @param {Object} query Optionale Suchparameter
-     * @return {Promise} Liste der gefundenen Adressen
+     * @return {Promise} Liste der gefundenen Autos
      */
     async search(query) {
         let cursor = this._cars.find({});
