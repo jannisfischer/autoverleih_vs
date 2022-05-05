@@ -1,10 +1,11 @@
-Beispielanwendung „Adressbuch”
+Anwendung „Autoverleih”
 ==============================
 
 Inhaltsverzeichnis
 ------------------
 
  1. [Kurzbeschreibung](#kurzbeschreibung)
+ 1. [Autoren](#autoren)
  1. [Nutzung der Gitpod Online-IDE](#nutzung-der-gitpod-online-ide)
  1. [Start mit Docker Compose](#start-mit-docker-compose)
  1. [Start einzelner Services mit und ohne Docker](#start-einzelner-services-mit-und-ohne-docker)
@@ -13,6 +14,13 @@ Inhaltsverzeichnis
 Kurzbeschreibung
 ----------------
 
+Diese Anwendung stellt einen Autoverleih dar. Hier können neben Autos
+auch LKWs, Motorräder und Fahrräder gemietet werden.
+
+Die verschiedenen Fahrzeugtypen sind in eigenen Collections in einer MongoDB gespeichert.
+
+
+#ALT
 Bei dieser Anwendung handelt es sich um eine Weiterentwicklung der gleichnamigen
 Aufgabe aus der Vorlesung „Webprogrammierung” im 3. Semester. Auch hier wird
 eine einfache Single Page App zur Verwaltung simpler Adressdatensätze implementiert.
@@ -28,6 +36,11 @@ als Gesamtprojekt ausgeführt werden.
 
 ![Screenshot 1](screenshot1.png?raw=true)
 ![Screenshot 2](screenshot2.png?raw=true)
+
+Autoren
+----------------
+
+© Jannis Fischer, Kevin Gosmann, Tobias Reiser, Luca Schneider
 
 Nutzung der Gitpod Online-IDE
 ----------------------------
