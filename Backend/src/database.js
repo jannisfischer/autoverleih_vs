@@ -115,10 +115,10 @@ class DatabaseFactory {
             ]);
         }
 
-        let bicycle = this.database.collection("bicycles");
+        let bicycles = this.database.collection("bicycles");
 
-        if (await bicycle.estimatedDocumentCount() === 0) {
-            bicycle.insertMany([
+        if (await bicycles.estimatedDocumentCount() === 0) {
+            bicycles.insertMany([
                 {
                     brand: "Serious",
                     model: "Rockville",
