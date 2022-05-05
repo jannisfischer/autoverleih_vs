@@ -12,7 +12,6 @@ export default class Buttonmethods{
                     production_date: vehicle.production_date,
                     status: "rented"
                 }}
-                console.log(vehicle._links.patch, body)
                 await backend.fetch(links.method, links.url, body)
                 alert("Das Fahrzeug wurde ausgeliehen!")
             }
@@ -26,7 +25,6 @@ export default class Buttonmethods{
                     production_date: vehicle.production_date,
                     status: "available"
                 }}
-                console.log(vehicle._links.patch, body)
                 await backend.fetch(links.method, links.url, body)
                 alert("Das Fahrzeug wurde zurückgegeben!")
             }
