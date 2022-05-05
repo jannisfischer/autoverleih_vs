@@ -8,7 +8,12 @@ import DatabaseFactory from "./database.js";
 import RootController from "./controller/root.controller.js";
 import AdressController from "./controller/address.controller.js";
 import CarController from "./controller/car.controller.js";
+<<<<<<< HEAD
 import TruckController from "./controller/truck.controller.js";
+=======
+import TruckController from "./controller/truckController.js";
+import MotorbikeController from "./controller/motorbike.controller.js";
+>>>>>>> b1fedb2742e7e9af173919235741ad19bf0eee37
 
 // Verzeichnisnamen der Quellcodedatei ermitteln
 import path from "path";
@@ -96,6 +101,7 @@ new RootController(server, "/", openApiFile);
 new AdressController(server, "/address");
 new CarController(server, "/car");
 new TruckController(server, "/truck");
+new MotorbikeController(server, "/motorbike");
 
 // Server tatsächlich starten
 server.listen(config.port, config.host, function() {

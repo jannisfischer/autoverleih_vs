@@ -59,10 +59,10 @@ class DatabaseFactory {
             ]);
         }
 
-        let truck = this.database.collection("trucks");
+        let trucks = this.database.collection("trucks");
 
-        if (await truck.estimatedDocumentCount() === 0) {
-            truck.insertMany([
+        if (await trucks.estimatedDocumentCount() === 0) {
+            trucks.insertMany([
                 {
                     brand: "Mercedes",
                     model: "Atego",
@@ -87,10 +87,10 @@ class DatabaseFactory {
             ]);
         }
 
-        let motorbike = this.database.collection("motorbikes");
+        let motorbikes = this.database.collection("motorbikes");
 
-        if (await motorbike.estimatedDocumentCount() === 0) {
-            motorbike.insertMany([
+        if (await motorbikes.estimatedDocumentCount() === 0) {
+            motorbikes.insertMany([
                 {
                     brand: "Suzuki",
                     model: "Hayabusa",
