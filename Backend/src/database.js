@@ -58,6 +58,34 @@ class DatabaseFactory {
                 },
             ]);
         }
+
+        let truck = this.database.collection("trucks");
+
+        if (await truck.estimatedDocumentCount() === 0) {
+            car.insertMany([
+                {
+                    brand: "Mercedes",
+                    model: "Atego",
+                    type: "N2",
+                    production_date: "01.04.2015",
+                    status: "available",
+                },
+                {
+                    brand: "MAN",
+                    model: "TGX",
+                    type: "N3",
+                    production_date: "15.02.2021",
+                    status: "rented",
+                },
+                {
+                    brand: "MAN",
+                    model: "TGL",
+                    type: "N2",
+                    production_date: "24.04.2011",
+                    status: "available",
+                },
+            ]);
+        }
     }
 }
 
