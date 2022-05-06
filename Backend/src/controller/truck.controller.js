@@ -5,9 +5,9 @@ import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
 
 /**
- * HTTP-Controller-Klasse für Autobucheinträge. Diese Klasse registriert
+ * HTTP-Controller-Klasse für Truckbucheinträge. Diese Klasse registriert
  * alle notwendigen URL-Handler beim Webserver für einen einfachen REST-
- * Webservice zum Lesen und Schreiben von Autos.
+ * Webservice zum Lesen und Schreiben von Trucks.
  */
 export default class TruckController {
     /**
@@ -87,7 +87,7 @@ export default class TruckController {
         if (result) {
             res.sendResult(result);
         } else {
-            throw new RestifyError.NotFoundError("Auto nicht gefunden");
+            throw new RestifyError.NotFoundError("Truck nicht gefunden");
         }
 
         return next();
@@ -105,7 +105,7 @@ export default class TruckController {
         if (result) {
             res.sendResult(result);
         } else {
-            throw new RestifyError.NotFoundError("Auto nicht gefunden");
+            throw new RestifyError.NotFoundError("Truck nicht gefunden");
         }
 
         return next();
