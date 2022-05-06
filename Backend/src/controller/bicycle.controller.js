@@ -87,7 +87,7 @@ export default class BicycleController {
         if (result) {
             res.sendResult(result);
         } else {
-            throw new RestifyError.NotFoundError("Auto nicht gefunden");
+            throw new RestifyError.NotFoundError("Fahrrad nicht gefunden");
         }
 
         return next();
@@ -105,7 +105,7 @@ export default class BicycleController {
         if (result) {
             res.sendResult(result);
         } else {
-            throw new RestifyError.NotFoundError("Auto nicht gefunden");
+            throw new RestifyError.NotFoundError("Fahrrad nicht gefunden");
         }
 
         return next();
