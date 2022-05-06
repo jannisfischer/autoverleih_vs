@@ -117,7 +117,7 @@ export default class TruckController {
      */
     async delete(req, res, next) {
         await this._service.delete(req.params.id)
-        res.status(204);
+        res.status(200);
         res.sendResult({});
         return next();
     }
