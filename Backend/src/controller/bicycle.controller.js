@@ -5,9 +5,9 @@ import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
 
 /**
- * HTTP-Controller-Klasse für Autobucheinträge. Diese Klasse registriert
+ * HTTP-Controller-Klasse für Fahrradbucheinträge. Diese Klasse registriert
  * alle notwendigen URL-Handler beim Webserver für einen einfachen REST-
- * Webservice zum Lesen und Schreiben von Autos.
+ * Webservice zum Lesen und Schreiben von Fahrrädern.
  */
 export default class BicycleController {
     /**
@@ -20,11 +20,11 @@ export default class BicycleController {
         this._service = new BicycleService();
         this._prefix = prefix;
 
-        // Collection: Trucks
+        // Collection: Bicycles
         server.get(prefix, wrapHandler(this, this.search));
         server.post(prefix, wrapHandler(this, this.create));
 
-        // Entity: Truck
+        // Entity: Bicycle
         server.get(prefix + "/:id", wrapHandler(this, this.read));
         server.put(prefix + "/:id", wrapHandler(this, this.update));
         server.patch(prefix + "/:id", wrapHandler(this, this.update));
@@ -51,8 +51,8 @@ export default class BicycleController {
     }
 
     /**
-     * GET /truck
-     * LKWs suchen
+     * GET /bicycle
+     * Fahrrad suchen
      */
     async search(req, res, next) {
         let result = await this._service.search(req.query);
@@ -62,8 +62,8 @@ export default class BicycleController {
     }
 
     /**
-     * POST /truck
-     * Neuen LKW anlegen
+     * POST /bicycle
+     * Neues Fahrrad anlegen
      */
     async create(req, res, next) {
         let result = await this._service.create(req.body);
@@ -77,8 +77,8 @@ export default class BicycleController {
     }
 
     /**
-     * GET /truck/:id
-     * LKW auslesen
+     * GET /bicycle/:id
+     * Fahrrad auslesen
      */
     async read(req, res, next) {
         let result = await this._service.read(req.params.id);
@@ -94,9 +94,9 @@ export default class BicycleController {
     }
 
     /**
-     * PUT /truck/:id
-     * PATCH /truck/:id
-     * LKW ändern
+     * PUT /bicycle/:id
+     * PATCH /bicycle/:id
+     * Fahrrad ändern
      */
     async update(req, res, next) {
         let result = await this._service.update(req.params.id, req.body);
@@ -112,8 +112,8 @@ export default class BicycleController {
     }
 
     /**
-     * DELETE /truck/:id
-     * LKW löschen
+     * DELETE /bicycle/:id
+     * Fahrrad löschen
      */
     async delete(req, res, next) {
         await this._service.delete(req.params.id)
