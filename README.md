@@ -5,8 +5,8 @@ Inhaltsverzeichnis
 ------------------
 
  1. [Kurzbeschreibung](#kurzbeschreibung)
+ 1. [Funktion](#funktion)
  1. [Autoren](#autoren)
- 1. [Nutzung der Gitpod Online-IDE](#nutzung-der-gitpod-online-ide)
  1. [Start mit Docker Compose](#start-mit-docker-compose)
  1. [Start einzelner Services mit und ohne Docker](#start-einzelner-services-mit-und-ohne-docker)
  1. [Hinwes zu Podman unter Linux](#hinweis-zu-podman-unter-linux)
@@ -17,71 +17,23 @@ Kurzbeschreibung
 Diese Anwendung stellt einen Autoverleih dar. Hier können neben Autos
 auch LKWs, Motorräder und Fahrräder gemietet werden.
 
-Die verschiedenen Fahrzeugtypen sind in eigenen Collections in einer MongoDB gespeichert.
+Als Nutzer kann man seinen eigenen PKW in den Bestand des Verleihs
+aufnehmen lassen. Alle weiteren Fahrzeuge verwaltet das Unternehmen
+selbst.
 
+Funktion
+----------------------------
 
-#ALT
-Bei dieser Anwendung handelt es sich um eine Weiterentwicklung der gleichnamigen
-Aufgabe aus der Vorlesung „Webprogrammierung” im 3. Semester. Auch hier wird
-eine einfache Single Page App zur Verwaltung simpler Adressdatensätze implementiert.
-
-Diese Version beinhaltet jedoch neben der Benutzeroberfläche auch ein vollständiges
-REST-Backend zur Ablage der Adressen in einer zentralen Datenbank und auch die
-Struktur des Quellcodes folgt eher modernen Best Practices wie der Nutzung von
-npm zur Verwaltung von Abhängigkeiten und der Nutzung eines Bundlers, um diese
-dem Browser zugänglich zu machen.
-
-Mit Docker und Docker Compose können die Bestandteile der App einzeln oder
-als Gesamtprojekt ausgeführt werden.
-
-![Screenshot 1](screenshot1.png?raw=true)
-![Screenshot 2](screenshot2.png?raw=true)
+Im Frontend werden die registrierten Fahrzeuge nach Fahrzeugtyp getrennt
+angezeigt. Zum Ausleihen bzw. Zurückgeben muss lediglich der entsprechende
+Button gedrückt werden. Beim Registrieren weiterer PKW müssen die entsprechenden
+Daten in die hierfür vorgesehenen Felder eingetragen werden.
 
 Autoren
 ----------------
 
 © Jannis Fischer, Kevin Gosmann, Tobias Reiser, Luca Schneider
 
-Nutzung der Gitpod Online-IDE
-----------------------------
-
-Falls Sie auf Ihrem Rechner gar keine Software installieren können oder die
-Installation von Docker nicht geklappt hapt (bspw. weil Sie die Home-Edition
-von Microsoft Windows nutzen), können Sie das Beispiel auch in der GitPod
-Online-IDE bearbeiten. Diese stellt Ihnen neben der IDE auch eine Linux-Umgebung
-mit vorinstallierten Werkzeugen für Docker und Node.js zur Verfügung, so dass
-Sie alle hier gezeigten Befehle direkt ausführen können. Gehen Sie hierfür
-wie folgt vor:
-
- 1. Importieren Sie den Quellcode in ein neues Git-Repository.
- 1. Laden Sie das Git-Repository auf GitHub hoch und machen es public.
- 1. Rufen Sie die Startseite des Git-Repositories in GitHub auf.
- 1. Schreiben Sie `https://gitpod.io/#` vor die GitHub-URL, um die IDE zu starten.
-
-Innerhalb der Online-IDE können Sie über das Menü ein neues Terminal öffnen,
-in dem alle Befehle ausgeführt werden können. Dabei müssen Sie lediglich
-darauf achten, die TCP-Ports aller ausgeführten Serverdienste (z.B. für die
-MongoDB oder den Backend-Webservice) auf der linken Seite über den sog.
-„Remote Explorer” freizuschalten und somit über eine öffentliche URL
-zugänglich zu machen:
-
-![Remote Explorer in der Gitpod Online-IDE](gitpod1.png)
-
-Indem Sie dann das Preview-Icon direkt neben der Freigabe anklicken, öffnet sich
-im selben Browser-Tab ein neuer Bereich mit einem eingebetteten Browser-Fenster.
-
-![Vorschau des Backend-Service in GitPod](gitpod2.png)
-
-Dort können Sie sich vom Backend-Service mit der Portnummer 3000 die öffentliche
-URL kopieren. Diese sollten Sie vor Start aller Services als Umgebungsvariable
-API_URL exportieren. Achten Sie dabei darauf, dass die URL keinen abschließenden
-Slash beinhalten darf!
-
-```sh
-export API_URL=https://3000-….gitpod.io
-```
-
-Anschließend sollte alles wie es soll funktionieren.
 
 Start mit Docker Compose
 ------------------------
