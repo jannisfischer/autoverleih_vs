@@ -13,7 +13,7 @@ export default class Bycicleliste extends Page {
     async init() {
         await super.init();
         this._title = "Bicycleliste";
-        //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
+        
 
         const backend = this._app.backend
         //Methoden aufgrund von Aufrufen aus verschiedenen Dateien in Klasse ausgelagert
@@ -80,8 +80,7 @@ export default class Bycicleliste extends Page {
             return listItem
         })
         bicyclelist.forEach((bicycle) => { list.appendChild(bicycle)})
-        //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
-        //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
+        
 
     }
 

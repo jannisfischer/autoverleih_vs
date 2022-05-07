@@ -13,7 +13,7 @@ export default class Bikeliste extends Page {
     async init() {
         await super.init();
         this._title = "Bikeliste";
-        //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
+        
         const backend = this._app.backend
         //Methoden aufgrund von Aufrufen aus verschiedenen Dateien in Klasse ausgelagert
         const buttonmethods = new Buttonmethods
@@ -78,8 +78,7 @@ export default class Bikeliste extends Page {
             return listItem
         })
         bikelist.forEach((bike) => { list.appendChild(bike)})
-        //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
-        //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
+        
 
     }
 

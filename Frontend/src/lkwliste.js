@@ -17,8 +17,7 @@ export default class Lkwliste extends Page {
         //Methoden aufgrund von Aufrufen aus verschiedenen Dateien in Klasse ausgelagert
         const buttonmethods = new Buttonmethods
         let result = await backend.fetch("GET", "/truck")
-        //// TODO: Anzuzeigende Inhalte laden mit this._app.backend.fetch() ////
-        //_app.backend.fetch() returned ein JSON Array mit Autos. Gemockt:
+        
         let dummyTruckArray = [
             {id: 123454, brand: "Mercedes", model:"LKW1", type: "7.5T", production_date:" 01.01.2013", status: "available"},
             {id: 123455, brand: "Mercedes", model:"LKW2", type: "3.5T", production_date:" 01.01.2001", status: "available"}
@@ -77,9 +76,7 @@ export default class Lkwliste extends Page {
             return listItem
         })
         trucklist.forEach((truck) => { list.appendChild(truck)})
-        //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
-        //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
-
+        
     }
 
 }

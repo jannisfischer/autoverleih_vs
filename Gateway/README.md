@@ -1,4 +1,4 @@
-Adressbuch: Gateway
+Autoverleih: Gateway
 ===================
 
 Inhaltsverzeichnis
@@ -12,7 +12,7 @@ Inhaltsverzeichnis
 Kurzbeschreibung
 ----------------
 
-Dies ist der Gateway-Server des Adressbuch-Beispiels, der alle Einzelservices
+Dies ist der Gateway-Server des Autoverleihs, der alle Einzelservices
 der Anwendung hinter einem zentralen HTTP-Endpunkt verbirgt. Für die Entwicklung
 ist es tatsächlich besser, jeden Service über eine localhost-Adresse des eigenen
 Rechners direkt ansprechen zu können. Setzt sich eine Anwendung allerdings aus

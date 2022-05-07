@@ -49,7 +49,7 @@ class App {
                 url: "/auto_erstellen",
                 show: () => this._gotoCreateCar()
             },
-            //// TODO: Eigene Routing-Regeln hier in der Mitte einfügen ////
+            
             {
                 url: ".*",
                 show: () => this._gotoList()

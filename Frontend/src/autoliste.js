@@ -78,8 +78,7 @@ export default class Autoliste extends Page {
             return listItem
         })
         carlist.forEach((car) => { list.appendChild(car)})
-        //// TODO: Inhalte in die HTML-Struktur einarbeiten ////
-        //// TODO: Neue Methoden für Event Handler anlegen und hier registrieren ////
+        
 
     }
 

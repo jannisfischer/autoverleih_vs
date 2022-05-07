@@ -1,4 +1,4 @@
-SPA/REST-Vorlage: Frontend
+Autoverleih: Frontend
 ==========================
 
 Inhaltsverzeichnis
@@ -13,7 +13,7 @@ Inhaltsverzeichnis
 Kurzbeschreibung
 ----------------
 
-Dies ist die clientseitige Single Page App mit dem Frontend des Beispiels.
+Dies ist die clientseitige Single Page App mit dem Frontend des Autoverleihs.
 Es handelt sich dabei um eine einfache Webanwendung, die mit VanillaJS
 (also einfachem JavaScript) ohne zusätzlichem Framework realisiert wurde.
 
