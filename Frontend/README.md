@@ -120,8 +120,3 @@ hierfür benötigt:
 Das `Dockerfile` wird auch verwendet, wenn im Wurzelverzeichnis mit Docker
 Compose die Datei `docker-compose.prod.yml` ausgeführt wird. Der Container wird
 im Grunde genommen damit auch auf die gleiche Art gestartet.
-
-#Zu Beachten
----------------------------------
-
-Dadurch, dass wir mit gitpod gearbeitet haben, verändern sich die Hostadressen zwischendurch. Daher kann es sein, dass nach Starten der Umgebung die api.url im Frontend-Ordner erneut angepasst werden muss.
