@@ -29,7 +29,7 @@ Daten in die hierfür vorgesehenen Felder eingetragen werden.
 Zu Beachten
 ---------------------------------
 
-Dadurch, dass wir mit gitpod gearbeitet haben, verändert sich die Hostadresse. Daher muss nach starten der Umgebung die workspace ID in die api.url im Frontend-Ordner eingetragen werden.
+Dadurch, dass wir mit gitpod gearbeitet haben, verändert sich die Hostadresse. Daher muss nach Starten der Umgebung die Workspace ID in die api.url im Frontend-Ordner eingetragen werden.
 
 Autoren
 ----------------

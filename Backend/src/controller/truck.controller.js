@@ -5,7 +5,7 @@ import {wrapHandler} from "../utils.js";
 import RestifyError from "restify-errors";
 
 /**
- * HTTP-Controller-Klasse für Truckbucheinträge. Diese Klasse registriert
+ * HTTP-Controller-Klasse für Truckeinträge. Diese Klasse registriert
  * alle notwendigen URL-Handler beim Webserver für einen einfachen REST-
  * Webservice zum Lesen und Schreiben von Trucks.
  */
