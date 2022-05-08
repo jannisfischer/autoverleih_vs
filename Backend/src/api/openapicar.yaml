@@ -1,10 +1,9 @@
 openapi: 3.0.0
 info:
-  title: Autobuch
-  description: "Die Autobuch-App nutzt einen simplen REST-Webservices zur Kommunikation\
+  title: Autoverleih
+  description: "Die Autoverleih-App nutzt einen simplen REST-Webservices zur Kommunikation\
     \ mit dem Backend. Dieser ermöglicht die üblichen CRUD-Operationen zur Suche,\
-    \ Anzeige, Bearbeitung und Löschung von Autos, wobei jedes Auto aus einer\
-    \ Marke, Model, Autotyp, Herstelldatum und einem Status besteht."
+    \ Anzeige, Bearbeitung und Löschung von Fahrzeugen."
   contact:
     name: Dennis Schulmeister-Zimolong
     url: https://www.wpvs.de
