@@ -25,7 +25,7 @@ export default class Auto_Erstellen extends Page {
                 brand: brandValue,
                 model: modelValue,
                 type: typeValue,
-                date: dateValue,
+                production_date: dateValue,
                 status: "available"
             }}
             console.log(brandValue, modelValue, typeValue, dateValue)
